@@ -7,20 +7,32 @@
 
 const express = require('express');
 const router  = express.Router();
-const db = require('../db/connection');
+const categoriesQueries = require('../db/queries/categories');
 
-router.get('/', (req, res) => {
-  const query = `SELECT * FROM widgets`;
-  console.log(query);
-  db.query(query)
-    .then(data => {
-      const widgets = data.rows;
-      res.json({ widgets });
+router.get("/categories", (req, res) => {
+  categoriesQueries
+    .getAllCategories()
+    .then((categories) => res.send({ categories }))
+    .catch((e) => {
+      console.error(e);
+      res.send(e);
+    });
+});
+
+router.post("/addCategory", (req, res) => {
+  const name = req.session.name;
+  if (!name) {
+    return res.send({ error: "error" });
+  }
+
+  categoriesQueries
+    .addCategory(name)
+    .then((category) => {
+      res.send(category);
     })
-    .catch(err => {
-      res
-        .status(500)
-        .json({ error: err.message });
+    .catch((e) => {
+      console.error(e);
+      res.send(e);
     });
 });
 
