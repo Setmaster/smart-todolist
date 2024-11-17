@@ -82,4 +82,51 @@ router.get("/me", (req, res) => {
     .catch((e) => res.send(e));
 });
 
+router.post("/:id", (req, res) => {
+  const userId = req.session.userId;
+  const name = req.session.name;
+  const password = req.session.password;
+  if (!userId) {
+    return res.send({ message: "not logged in" });
+  }
+  if (name) {
+    let user = { 'id' : userId, 'name' : name};
+    userQueries
+      .updateUserName(user)
+      .then((user) => {
+        if (!user) {
+          return res.send({ error: "no user with that id" });
+        }
+        res.send({
+          user: {
+            name: user.name,
+            email: user.email,
+            id: userId,
+          },
+        });
+      })
+      .catch((e) => res.send(e));
+  }
+
+  if (password) {
+    let user = { 'id' : userId, 'password' : bcrypt.hashSync(password, 12) };
+    userQueries
+      .updateUserPassword(user)
+      .then((user) => {
+        if (!user) {
+          return res.send({ error: "no user with that id" });
+        }
+        res.send({
+          user: {
+            name: user.name,
+            email: user.email,
+            id: userId,
+          },
+        });
+      })
+      .catch((e) => res.send(e));
+  }
+
+});
+
 module.exports = router;
