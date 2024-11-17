@@ -19,7 +19,7 @@ CREATE TABLE todos (
   name VARCHAR(255) NOT NULL,
   user_id int NOT NULL REFERENCES users(id) ON DELETE CASCADE,
   category_id int REFERENCES categories(id) ON DELETE CASCADE,
-  date_created timestamp NOT NULL SET DEFAULT now(),
+  date_created timestamp NOT NULL DEFAULT now(),
   todo_date timestamp NOT NULL,
   complete_date timestamp,
   enquiry text NOT NULL,
