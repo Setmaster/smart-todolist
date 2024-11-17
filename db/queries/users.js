@@ -48,7 +48,7 @@ const addUser = function (user) {
   return db
   .query(query, [user.name,user.email,user.password])
   .then((result) => {
-  //  console.log(result.rows[0]);
+    console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
