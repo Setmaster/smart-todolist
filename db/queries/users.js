@@ -48,7 +48,7 @@ const addUser = function (user) {
   return db
   .query(query, [user.name,user.email,user.password])
   .then((result) => {
-  //  console.log(result.rows[0]);
+    console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
@@ -57,7 +57,44 @@ const addUser = function (user) {
 
 };
 
+/**
+ * Update a user name in the database.
+ * @param {{name: string, id: string}} user
+ * @return {Promise<{}>} A promise to the user.
+ */
+const updateUserName = function (user) {
+  const query = `
+    update users set name = $1 where id = $2 RETURNING *
+  `;
+  return db
+  .query(query, [user.name,user.id])
+  .then((result) => {
+    console.log(result.rows[0]);
+    return result.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
 
+/**
+ * Update a user password in the database.
+ * @param {{name: string, id: string}} user
+ * @return {Promise<{}>} A promise to the user.
+ */
+const updateUserPassword = function (user) {
+  const query = `
+    update users set password = $1 where id = $2 RETURNING *
+  `;
+  return db
+  .query(query, [user.password,user.id])
+  .then((result) => {
+    console.log(result.rows[0]);
+    return result.rows[0];
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
 
-
-module.exports = { getUserWithEmail, getUserWithId, addUser };
+module.exports = { getUserWithEmail, getUserWithId, addUser, updateUserName, updateUserPassword };

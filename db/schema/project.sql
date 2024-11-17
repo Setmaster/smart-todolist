@@ -22,7 +22,7 @@ CREATE TABLE todos (
   category_id int REFERENCES categories(id) ON DELETE CASCADE,
   date_created timestamp NOT NULL DEFAULT now(),
   todo_date timestamp NOT NULL,
-  complete_date timestamp,
+  complete_date timestamp DEFAULT NULL,
   enquiry text NOT NULL,
   enquiry_processed boolean NOT NULL,
   details text
