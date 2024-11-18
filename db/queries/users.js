@@ -58,16 +58,16 @@ const addUser = function (user) {
 };
 
 /**
- * Update a user name in the database.
- * @param {{name: string, id: string}} user
+ * Update a user  in the database.
+ * @param {{name: string, id: string, password: string}} user
  * @return {Promise<{}>} A promise to the user.
  */
-const updateUserName = function (user) {
+const updateUser = function (user) {
   const query = `
-    update users set name = $1 where id = $2 RETURNING *
+    update users set name = $1, password = $3 where id = $2 RETURNING *
   `;
   return db
-  .query(query, [user.name,user.id])
+  .query(query, [user.name,user.id, user.password])
   .then((result) => {
     console.log(result.rows[0]);
     return result.rows[0];
@@ -77,24 +77,5 @@ const updateUserName = function (user) {
   });
 };
 
-/**
- * Update a user password in the database.
- * @param {{name: string, id: string}} user
- * @return {Promise<{}>} A promise to the user.
- */
-const updateUserPassword = function (user) {
-  const query = `
-    update users set password = $1 where id = $2 RETURNING *
-  `;
-  return db
-  .query(query, [user.password,user.id])
-  .then((result) => {
-    console.log(result.rows[0]);
-    return result.rows[0];
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
-};
 
-module.exports = { getUserWithEmail, getUserWithId, addUser, updateUserName, updateUserPassword };
+module.exports = { getUserWithEmail, getUserWithId, addUser, updateUser };

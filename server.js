@@ -1,6 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
 const {generateTask} = require("./lib/ai-utils");
+const todoQueries = require('./db/queries/todos.js');
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -51,8 +52,8 @@ app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
 
-// Example AI call usage
-generateTask("Watch Harry Potter with my girlfriend").then(({error, task})=>{
-  console.log(`Error: ${error}`);
-  console.log("Generated Task:", JSON.stringify(task, null, 2));
-});
+//let results = todoQueries.addToDo(1,"Watch Harry Potter with my girlfriend");
+
+//console.log(results);
+
+
