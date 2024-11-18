@@ -115,7 +115,7 @@ const notCompleteToDo = function (id) {
  */
 const deleteToDo = function (id) {
   const query = `
-    delete todos where id = $1 RETURNING *
+    delete from todos where id = $1 RETURNING *
   `;
   return db
   .query(query, [id])
