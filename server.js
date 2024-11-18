@@ -1,5 +1,6 @@
 // load .env data into process.env
 require('dotenv').config();
+const {generateTask} = require("./lib/ai-utils");
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -29,14 +30,12 @@ app.use(express.static('public'));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
 app.use('/api/users', userApiRoutes);
-app.use('/api/widgets', widgetApiRoutes);
 app.use('/users', usersRoutes);
 // Note: mount other resources here, using the same pattern above
 
@@ -50,4 +49,10 @@ app.get('/', (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
+});
+
+// Example AI call usage
+generateTask("Watch Harry Potter with my girlfriend").then(({error, task})=>{
+  console.log(`Error: ${error}`);
+  console.log("Generated Task:", JSON.stringify(task, null, 2));
 });

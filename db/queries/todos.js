@@ -10,11 +10,10 @@ const addToDo = function (list) {
       category_id,
       todo_date,
       enquiry,
-      enquiry_processed,
       details
     )
     VALUES
-    ($1, $2, $3, $4, $5, $6, $7)
+    ($1, $2, $3, $4, $5, $6)
     RETURNING *
   `;
   const queryParams =
@@ -24,7 +23,6 @@ const addToDo = function (list) {
     list.category_id,
     list.todo_date,
     list.enquiry,
-    list.enquiry_processed,
     list.details
   ];
 
