@@ -1,5 +1,7 @@
 // load .env data into process.env
 require('dotenv').config();
+const {generateTask} = require("./lib/ai-utils");
+const todoQueries = require('./db/queries/todos.js');
 
 // Web server config
 const sassMiddleware = require('./lib/sass-middleware');
@@ -21,7 +23,7 @@ app.use(
   sassMiddleware({
     source: __dirname + '/styles',
     destination: __dirname + '/public/styles',
-    isSass: false, // false => scss, true => sass
+    isSass: true,
   })
 );
 app.use(express.static('public'));
@@ -29,15 +31,15 @@ app.use(express.static('public'));
 // Separated Routes for each Resource
 // Note: Feel free to replace the example routes below with your own
 const userApiRoutes = require('./routes/users-api');
-const widgetApiRoutes = require('./routes/widgets-api');
 const usersRoutes = require('./routes/users');
 
 // Mount all resource routes
 // Note: Feel free to replace the example routes below with your own
 // Note: Endpoints that return data (eg. JSON) usually start with `/api`
-// app.use('/api/users', userApiRoutes);
-// app.use('/api/widgets', widgetApiRoutes);
-// app.use('/users', usersRoutes);
+
+app.use('/api/users', userApiRoutes);
+app.use('/users', usersRoutes);
+
 // Note: mount other resources here, using the same pattern above
 
 // Home page
@@ -55,3 +57,9 @@ app.get('/todo', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+//let results = todoQueries.addToDo(1,"Watch Harry Potter with my girlfriend");
+
+//console.log(results);
+
+

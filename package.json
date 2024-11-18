@@ -12,7 +12,10 @@
   "author": "Lighthouse Labs",
   "license": "ISC",
   "dependencies": {
+    "@google/generative-ai": "^0.21.0",
+    "bcrypt": "^5.1.1",
     "chalk": "^2.4.2",
+    "cookie-session": "^2.1.0",
     "dotenv": "^2.0.0",
     "ejs": "^2.6.2",
     "express": "^4.17.1",
