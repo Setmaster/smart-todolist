@@ -43,10 +43,10 @@ router.post("/completeToDo", (req, res) => {
 });
 
 // set not Complete todo
-router.post("/notCompleteToDo", (req, res) => {
+router.post("/resetToDo", (req, res) => {
   let id = req.body.id;
   todosQueries
-    .notCompleteToDo(id)
+    .resetToDo(id)
     .then((list) => {
       if (!list) {
         return res.send({ error: "error" });
