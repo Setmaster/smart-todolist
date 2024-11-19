@@ -17,8 +17,10 @@
     border: 2px darkgray solid;
     border-radius: 24px;
     margin: 15px 20px 50px;
+    background-color: white;
 
     svg {
+      cursor: pointer;
       width: calc(48px*3/4);
       height: calc(48px*3/4);
       padding-right: 5px;
@@ -116,4 +118,13 @@
     }
   }
 
+}
+
+.fa-edit {
+  cursor: pointer;
+  margin-right: 20px;
+}
+
+.fa-trash {
+  cursor: pointer;
 }
