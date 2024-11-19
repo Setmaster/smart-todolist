@@ -1,29 +1,25 @@
-/*
- * All routes for User Data are defined here
- * Since this file is loaded in server.js into api/users,
- *   these routes are mounted onto /api/users
- * See: https://expressjs.com/en/guide/using-middleware.html#middleware.router
- */
+// routes/user-api.js
+
 const bcrypt = require("bcrypt");
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const userQueries = require('../db/queries/users');
 
 // Create a new user
-router.post("/", (req, res) => {
+router.post("/createUser", (req, res) => {
   const user = req.body;
   user.password = bcrypt.hashSync(user.password, 12);
   userQueries
     .addUser(user)
-    .then((user) => {
-      if (!user) {
-        return res.send({ error: "error" });
+    .then((newUser) => {
+      if (newUser) {
+        req.session.userId = newUser.id;
+        res.status(201).json({ message: "User created successfully" });
+      } else {
+        res.status(400).json({ error: "Failed to create user" });
       }
-
-      req.session.userId = user.id;
-      res.send("🤗");
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
 // Log a user in
@@ -31,47 +27,45 @@ router.post("/login", (req, res) => {
   const email = req.body.email;
   const password = req.body.password;
 
-  userQueries.getUserWithEmail(email).then((user) => {
-    if (!user) {
-      return res.send({ error: "no user with that id" });
-    }
+  userQueries.getUserWithEmail(email)
+    .then((user) => {
+      if (!user || !bcrypt.compareSync(password, user.password)) {
+        return res.status(401).json({ error: "Invalid email or password" });
+      }
 
-    if (!bcrypt.compareSync(password, user.password)) {
-      return res.send({ error: "error" });
-    }
-
-    req.session.userId = user.id;
-    res.send({
-      user: {
-        name: user.name,
-        email: user.email,
-        id: user.id,
-      },
-    });
-  });
+      req.session.userId = user.id;
+      res.status(200).json({
+        user: {
+          name: user.name,
+          email: user.email,
+          id: user.id,
+        },
+      });
+    })
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
 // Log a user out
 router.post("/logout", (req, res) => {
   req.session.userId = null;
-  res.send({});
+  res.status(200).json({ message: "Logout successful" });
 });
 
 // Return information about the current user (based on cookie value)
 router.get("/me", (req, res) => {
   const userId = req.session.userId;
   if (!userId) {
-    return res.send({ message: "not logged in" });
+    return res.status(401).json({ message: "Not logged in" });
   }
 
   userQueries
     .getUserWithId(userId)
     .then((user) => {
       if (!user) {
-        return res.send({ error: "no user with that id" });
+        return res.status(404).json({ error: "User not found" });
       }
 
-      res.send({
+      res.status(200).json({
         user: {
           name: user.name,
           email: user.email,
@@ -79,33 +73,34 @@ router.get("/me", (req, res) => {
         },
       });
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
-router.post("/:id/update", (req, res) => {
+// Update user information
+router.put("/:id/update", (req, res) => {
   const userId = req.session.userId;
-  const name = req.session.name;
-  const password = req.session.password;
   if (!userId) {
-    return res.send({ message: "not logged in" });
+    return res.status(401).json({ message: "Not logged in" });
   }
-  let user = { 'id' : userId, 'name' : name, "password": password};
-  userQueries
-      .updateUser(user)
-      .then((user) => {
-        if (!user) {
-          return res.send({ error: "no user with that id" });
-        }
-        res.send({
-          user: {
-            name: user.name,
-            email: user.email,
-            id: userId,
-          },
-        });
-      })
-      .catch((e) => res.send(e));
 
+  const { name, password } = req.body;
+  const updatedUser = { id: userId, name, password: bcrypt.hashSync(password, 12) };
+
+  userQueries
+    .updateUser(updatedUser)
+    .then((user) => {
+      if (!user) {
+        return res.status(404).json({ error: "User not found" });
+      }
+      res.status(200).json({
+        user: {
+          name: user.name,
+          email: user.email,
+          id: userId,
+        },
+      });
+    })
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
 module.exports = router;

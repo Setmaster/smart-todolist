@@ -93,7 +93,7 @@ const completeToDo = function (id) {
  * @param {{id: string}} id
  * @return {Promise<{}>} A promise to the user.
  */
-const resetToDo = function (id) {
+const uncompleteTodo = function (id) {
   const query = `
     update todos set complete_date = null where id = $1 RETURNING *
   `;
@@ -149,4 +149,4 @@ const allToDos = function (user_id, category) {
   });
 };
 
-module.exports = { addToDo, updateToDo, completeToDo, resetToDo, deleteToDo, allToDos };
+module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allToDos };
