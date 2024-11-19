@@ -128,4 +128,25 @@ const deleteToDo = function (id) {
   });
 };
 
-module.exports = { addToDo, updateToDo, completeToDo, resetToDo, deleteToDo };
+/**
+ * get list of todos in the database by user/category.
+ * @param {{id: string, category: string}} id
+ * @return {Promise<{}>} A promise to the user.
+ */
+const allToDos = function (user_id, category) {
+  const query = `
+    select * from todos where user_id = $1 and category = $2
+    order by complete_date desc, date_created asc
+  `;
+  return db
+  .query(query, [user_id, category])
+  .then((result) => {
+    console.log(result.rows);
+    return result.rows;
+  })
+  .catch((err) => {
+    console.log(err.message);
+  });
+};
+
+module.exports = { addToDo, updateToDo, completeToDo, resetToDo, deleteToDo, allToDos };

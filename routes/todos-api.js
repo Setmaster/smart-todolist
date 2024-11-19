@@ -68,3 +68,17 @@ router.post("/deleteToDo", (req, res) => {
     .catch((e) => res.send(e));
 });
 
+// all todos for a give user/category
+router.post("/allToDos", (req, res) => {
+  let user_id = req.body.user_id;
+  let category = req.body.category;
+  todosQueries
+    .allToDos(user_id,category)
+    .then((list) => {
+      if (!list) {
+        return res.send({ error: "error" });
+      }
+    })
+    .catch((e) => res.send(e));
+});
+
