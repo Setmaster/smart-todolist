@@ -1,5 +1,7 @@
+// routes/todo-api.js
+
 const express = require('express');
-const router  = express.Router();
+const router = express.Router();
 const todosQueries = require('../db/queries/todos');
 
 // Create a new todo
@@ -7,78 +9,91 @@ router.post("/addToDo", (req, res) => {
   const user_id = req.body.user_id;
   const enquire = req.body.enquire;
   todosQueries
-    .addToDo(user_id,enquire)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .addToDo(user_id, enquire)
+    .then((newTodo) => {
+      if (newTodo) {
+        return res.status(201).json(newTodo);
+      } else {
+        return res.status(400).json({ error: "Failed to create todo" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
 // Update todo
-router.post("/updateToDo", (req, res) => {
-  let list = { 'id' : req.body.id, 'title' : req.body.title, "details": req.body.details, "category": req.body.category};
+router.put("/updateToDo", (req, res) => {
+  const list = { id: req.body.id, title: req.body.title, details: req.body.details, category: req.body.category };
   todosQueries
     .updateToDo(list)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .then((updatedTodo) => {
+      if (updatedTodo) {
+        return res.status(200).json(updatedTodo);
+      } else {
+        return res.status(404).json({ error: "Todo not found" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
-// set Complete todo
-router.post("/completeToDo", (req, res) => {
-  let id = req.body.id;
+// Set Complete todo
+router.put("/completeToDo", (req, res) => {
+  const id = req.body.id;
   todosQueries
     .completeToDo(id)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .then((completedList) => {
+      if (completedList) {
+        return res.status(200).json(completedList);
+      } else {
+        return res.status(404).json({ error: "Todo not found" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
-// set not Complete todo
-router.post("/resetToDo", (req, res) => {
-  let id = req.body.id;
+// Set not Complete todo
+router.put("/uncompleteTodo", (req, res) => {
+  const id = req.body.id;
   todosQueries
-    .resetToDo(id)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .uncompleteTodo(id)
+    .then((uncompletedTodo) => {
+      if (uncompletedTodo) {
+        return res.status(200).json(uncompletedTodo);
+      } else {
+        return res.status(404).json({ error: "Todo not found" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
-// delete todo
-router.post("/deleteToDo", (req, res) => {
-  let id = req.body.id;
+// Delete todo
+router.delete("/deleteToDo", (req, res) => {
+  const id = req.body.id;
   todosQueries
     .deleteToDo(id)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .then((deletedTodo) => {
+      if (deletedTodo) {
+        return res.status(200).json({ message: "Todo deleted successfully" });
+      } else {
+        return res.status(404).json({ error: "Todo not found" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
-// all todos for a give user/category
-router.post("/allToDos", (req, res) => {
-  let user_id = req.body.user_id;
-  let category = req.body.category;
+// All todos for a given user/category
+router.get("/allToDos", (req, res) => {
+  const user_id = req.body.user_id;
+  const category = req.body.category;
   todosQueries
-    .allToDos(user_id,category)
-    .then((list) => {
-      if (!list) {
-        return res.send({ error: "error" });
+    .allToDos(user_id, category)
+    .then((todos) => {
+      if (todos) {
+        return res.status(200).json(todos);
+      } else {
+        return res.status(404).json({ error: "No todos found" });
       }
     })
-    .catch((e) => res.send(e));
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
 
+module.exports = router;
