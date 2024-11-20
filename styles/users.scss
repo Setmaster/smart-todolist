@@ -62,6 +62,13 @@
       width: 15px;
       height: 15px;
     }
+
+    &:hover {
+      background-color: rgba(240, 240, 240, 0.2);
+      .item-container a {
+        color: #ff4cea;
+      }
+    }
   }
 }
 
