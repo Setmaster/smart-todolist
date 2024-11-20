@@ -14,7 +14,7 @@ router.post("/createUser", (req, res) => {
     .then((newUser) => {
       if (newUser) {
         req.session.userId = newUser.id;
-        res.status(201).json({ message: "User created successfully" });
+        res.redirect('/todos'); // Redirect to /todos upon successful register
       } else {
         res.status(400).json({ error: "Failed to create user" });
       }
