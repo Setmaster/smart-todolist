@@ -81,11 +81,11 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/allToDos", (req, res) => {
+router.get("/toDosByCategory", (req, res) => {
   const user_id = req.body.user_id;
   const category = req.body.category;
   todosQueries
-    .allToDos(user_id, category)
+    .toDosByCategory(user_id, category)
     .then((todos) => {
       if (todos) {
         return res.status(200).json(todos);
@@ -95,5 +95,22 @@ router.get("/allToDos", (req, res) => {
     })
     .catch((e) => res.status(500).json({ error: "Internal server error" }));
 });
+
+// Search todos for a given user/searching key
+router.get("/searchToDos", (req, res) => {
+  const user_id = req.body.user_id;
+  const searching_key = req.body.searching_key;
+  todosQueries
+    .searchToDos(user_id, searching_key)
+    .then((todos) => {
+      if (todos) {
+        return res.status(200).json(todos);
+      } else {
+        return res.status(404).json({ error: "No todos found" });
+      }
+    })
+    .catch((e) => res.status(500).json({ error: "Internal server error" }));
+});
+
 
 module.exports = router;
