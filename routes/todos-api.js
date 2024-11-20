@@ -1,8 +1,11 @@
 // routes/todo-api.js
 
 const express = require('express');
+const app = express();
 const router = express.Router();
 const todosQueries = require('../db/queries/todos');
+
+app.use(express.json());
 
 // Create a new todo
 router.post("/addToDo", (req, res) => {
@@ -81,13 +84,15 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/allTodosByCategory", (req, res) => {
-  const user_id = req.body.user_id;
+router.post("/allTodosByCategory", (req, res) => {
+  console.log('api call category', req)
+  const user_id = req.session.userId;
   const category = req.body.category;
   todosQueries
     .allTodosByCategory(user_id, category)
     .then((todos) => {
       if (todos) {
+        console.log('show all todos:', todos)
         return res.status(200).json(todos);
       } else {
         return res.status(404).json({ error: "No todos found" });

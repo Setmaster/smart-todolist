@@ -1,5 +1,6 @@
 // Client facing scripts here
 
+
 document.addEventListener('DOMContentLoaded', function() {
   const modal = document.getElementById('myModal');
   const openModalBtn = document.getElementById('openModalBtn');
@@ -28,3 +29,20 @@ document.addEventListener('DOMContentLoaded', function() {
 
 	// })
 });
+
+const categoryBtn = document.addEventListener('click', async function(e) {
+  try {
+    const response = await fetch('/api/todos/allTodosByCategory', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({category: 'watch'})
+    })
+    console.log("fetch return response", response)
+  } catch (error) {
+    console.error(error.message);
+  }
+})
+
+

@@ -134,6 +134,7 @@ const deleteToDo = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const allTodosByCategory = function (user_id, category) {
+  console.log('db user and category', user_id, category)
   const query = `
     select * from todos where user_id = $1 and category = $2
     order by complete_date desc, date_created asc
@@ -141,7 +142,7 @@ const allTodosByCategory = function (user_id, category) {
   return db
   .query(query, [user_id, category])
   .then((result) => {
-    console.log(result.rows);
+    console.log('db return results', result.rows);
     return result.rows;
   })
   .catch((err) => {
