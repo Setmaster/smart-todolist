@@ -64,12 +64,15 @@ document.addEventListener('DOMContentLoaded', function () {
       .catch(error => console.error('Error:', error));
   });
 
-  // Add event listeners to each category button
-  const categoryButtons = document.querySelectorAll('.category-btn');
-  categoryButtons.forEach(button => {
-    button.addEventListener('click', async function (e) {
+// Add event listeners to each category item
+  const categoryItems = document.querySelectorAll('.category-links--item');
+  categoryItems.forEach(item => {
+    item.addEventListener('click', async function (e) {
       try {
-        const category = e.target.innerHTML.trim();
+        // use the inner .category-btn inside the clicked link to get the category
+        const categoryBtn = item.querySelector('.category-btn');
+        const category = categoryBtn.innerHTML.trim();
+
         const response = await fetch('/api/todos/toDosByCategory', {
           method: 'POST',
           headers: {
@@ -80,7 +83,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const todos = await response.json();
         console.log('result of response json:', todos);
 
-        // Empty all the li from ul for todolist
+        // Empty all the li from ul for todo list
         const todoList = document.querySelector('.todo-list');
         todoList.innerHTML = '';
 
@@ -91,19 +94,19 @@ document.addEventListener('DOMContentLoaded', function () {
         if (todos.length > 0) {
           todos.forEach(todo => {
             const todoItem = document.createElement('li');
-            // set the data not displayed into the dataset for later use
+            // Set the data not displayed into the dataset for later use
             todoItem.dataset.id = todo.id;
             todoItem.dataset.title = todo.title;
             todoItem.innerHTML = `
-              <div class="todo-list-name">
-                <input type="checkbox">
-                <p>${todo.details}</p>
-              </div>
-              <div class="todo-list-edit">
-                <i class="fas fa-edit"></i>
-                <i class="fa-solid fa-trash"></i>
-              </div>
-            `;
+            <div class="todo-list-name">
+              <input type="checkbox">
+              <p>${todo.details}</p>
+            </div>
+            <div class="todo-list-edit">
+              <i class="fas fa-edit"></i>
+              <i class="fa-solid fa-trash"></i>
+            </div>
+          `;
             todoList.appendChild(todoItem);
           });
 
@@ -134,6 +137,7 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
 
   const logoutBtn = document.querySelector('.btn-logout');
 
