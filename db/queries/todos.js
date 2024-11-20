@@ -150,4 +150,22 @@ const allTodosByCategory = function (user_id, category) {
   });
 };
 
-module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allTodosByCategory };
+const searchToDos = function (user_id, searchingKey) {
+  const query = `
+    SELECT * FROM todos WHERE user_id = $1
+    AND (LOWER(title) LIKE $2 OR LOWER(details) LIKE $2)
+    ORDER BY complete_date DESC, date_created ASC;
+  `;
+  return db
+    .query(query, [user_id, `%${searchingKey.toLowerCase()}%`])
+    .then((result) => {
+      console.log(result.rows);
+      return result.rows;
+    })
+    .catch((err) => {
+      console.log(err.message);
+    });
+};
+
+
+module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allTodosByCategory, searchToDos };

@@ -37,6 +37,7 @@ app.use(session({
 const userAPIRoutes = require('./routes/users-api');
 const todosAPIRoutes = require('./routes/todos-api');
 const pagesRoutes = require('./routes/pages');
+const {searchToDos} = require("./db/queries/todos");
 
 app.use('/api/users', userAPIRoutes);
 app.use('/api/todos', todosAPIRoutes);
@@ -45,3 +46,7 @@ app.use('/', pagesRoutes);
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+searchToDos(1, "movie").then((result=>{
+  console.log(result)
+}))
