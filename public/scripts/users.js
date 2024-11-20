@@ -13,7 +13,8 @@ document.addEventListener('DOMContentLoaded', function () {
       const todoTitle = todoItem.dataset.title;
 
       // Populate modal form fields
-      document.getElementById('category').value = todoCategory;
+      const categorySelect = document.getElementById('category');
+      categorySelect.value = todoCategory;
       document.getElementById('todo').value = todoDescription;
       document.getElementById('todoId').value = todoId;
       document.getElementById('todoTitle').value = todoTitle;

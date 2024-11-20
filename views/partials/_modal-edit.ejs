@@ -5,7 +5,11 @@
             <input type="hidden" name="id" id="todoId">
             <input type="hidden" name="title" id="todoTitle">
             <label class="label-user" for="category">Category</label>
-            <input type="text" name="category" id="category" placeholder="Change category">
+            <select name="category" id="category">
+                <% categories.forEach(function(category) { %>
+                    <option value="<%= category %>"><%= category %></option>
+                <% }); %>
+            </select>
             <label class="label-desc" for="todo">Todo Description</label>
             <input type="text" name="todo" id="todo" placeholder="Change todo">
             <button type="button" id="saveEditBtn" class="btn">Save Edit</button>
