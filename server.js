@@ -23,6 +23,8 @@ app.use(
 );
 app.use(express.static('public'));
 
+app.use(express.json());
+
 // Set up session management
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default_secret',
