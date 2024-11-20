@@ -45,8 +45,23 @@ document.addEventListener('DOMContentLoaded', function () {
         if (todos.length > 0) {
           todos.forEach(todo => {
             const todoItem = document.createElement('li');
-            todoItem.innerHTML = `
+            const isComplete = todo.complete_date;
+            if (isComplete) {
+              todoItem.innerHTML = `
               <div class="todo-list-name">
+                <label>Complete</label>
+                <input type="checkbox" checked>
+                <p>${todo.title}</p>
+              </div>
+              <div class="todo-list-edit">
+                <i id="openModalBtn" class="fas fa-edit"></i>
+                <i class="fa-solid fa-trash"></i>
+              </div>
+              `
+            } else {
+              todoItem.innerHTML = `
+              <div class="todo-list-name">
+                <label>Complete</label>
                 <input type="checkbox">
                 <p>${todo.title}</p>
               </div>
@@ -54,7 +69,9 @@ document.addEventListener('DOMContentLoaded', function () {
                 <i id="openModalBtn" class="fas fa-edit"></i>
                 <i class="fa-solid fa-trash"></i>
               </div>
-            `
+              `
+            }
+
             todoList.appendChild(todoItem);
           })
         } else {
