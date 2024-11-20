@@ -30,9 +30,9 @@ router.post("/login", (req, res) => {
 
   userQueries.getUserWithEmail(email)
     .then((user) => {
-      // if (!user || !bcrypt.compareSync(password, user.password)) {
-      //   return res.status(401).json({ error: "Invalid email or password" });
-      // }
+       if (!user || !bcrypt.compareSync(password, user.password)) {
+         return res.status(401).json({ error: "Invalid email or password" });
+       }
 
       req.session.userId = user.id;
       res.status(200).json({
