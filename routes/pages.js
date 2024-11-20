@@ -1,6 +1,7 @@
 ﻿const express = require('express');
 const router = express.Router();
 const {categories} = require('../lib/ai-utils');
+const {getUserWithId} = require("../db/queries/users");
 
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
@@ -27,10 +28,18 @@ router.get('/', (req, res) => {
 });
 
 // Todos page route
-router.get('/todos', checkLoggedIn, (req, res) => {
-  console.log(categories);
-  const templateVars = {categories}
-  res.render('todos', templateVars); // Render todos page if logged in
+router.get('/todos', checkLoggedIn, async (req, res) => {
+  try {
+    const user = await getUserWithId(req.session.userId);
+    const templateVars = {
+      categories,
+      userEmail: user.email
+    };
+    res.render('todos', templateVars); // Render todos page if logged in
+  } catch (e) {
+    console.error(e);
+    res.status(500).send("Internal server error");
+  }
 });
 
 module.exports = router;
