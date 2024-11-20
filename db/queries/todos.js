@@ -134,6 +134,7 @@ const deleteToDo = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const toDosByCategory = function (user_id, category) {
+  console.log('user id and category in database', user_id, category)
   const query = `
     select * from todos where user_id = $1 and lower(category) like $2
     order by complete_date desc, date_created asc
