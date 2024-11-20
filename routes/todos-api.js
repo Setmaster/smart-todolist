@@ -81,8 +81,8 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/toDosByCategory", (req, res) => {
-  const user_id = req.body.user_id;
+router.post("/toDosByCategory", (req, res) => {
+  const user_id = req.session.userId;
   const category = req.body.category;
   todosQueries
     .toDosByCategory(user_id, category)
