@@ -133,14 +133,13 @@ const deleteToDo = function (id) {
  * @param {{id: string, category: string}} id
  * @return {Promise<{}>} A promise to the user.
  */
-const allTodosByCategory = function (user_id, category) {
-  console.log('db user and category', user_id, category)
+const toDosByCategory = function (user_id, category) {
   const query = `
-    select * from todos where user_id = $1 and category = $2
+    select * from todos where user_id = $1 and lower(category) like $2
     order by complete_date desc, date_created asc
   `;
   return db
-  .query(query, [user_id, category])
+  .query(query, [user_id, `%${category.toLowerCase()}%`])
   .then((result) => {
     console.log('db return results', result.rows);
     return result.rows;
@@ -150,6 +149,11 @@ const allTodosByCategory = function (user_id, category) {
   });
 };
 
+/**
+ * search list of todos in the database by title or details.
+ * @param {{id: string, searchingKey: string}} id
+ * @return {Promise<{}>} A promise to the user.
+ */
 const searchToDos = function (user_id, searchingKey) {
   const query = `
     SELECT * FROM todos WHERE user_id = $1
@@ -168,4 +172,4 @@ const searchToDos = function (user_id, searchingKey) {
 };
 
 
-module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allTodosByCategory, searchToDos };
+module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, toDosByCategory, searchToDos };
