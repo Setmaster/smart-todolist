@@ -66,4 +66,21 @@ document.addEventListener('DOMContentLoaded', function () {
       }
     });
   });
+
+
+  const logoutBtn = document.querySelector('.btn-logout');
+
+  if (logoutBtn) {
+    console.log("logout found")
+    logoutBtn.addEventListener('click', function() {
+      fetch('api/users/logout', {
+        method: 'POST',
+        credentials: 'same-origin'
+      })
+        .then(response=>{
+          window.location.href = '/';
+        })
+        .catch(error => console.error('Error:', error));
+    });
+  }
 });
