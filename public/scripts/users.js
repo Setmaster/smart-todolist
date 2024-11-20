@@ -31,7 +31,7 @@ document.addEventListener('DOMContentLoaded', function() {
           },
           body: JSON.stringify({ category }) // Send the category in the request body
         });
-        console.log("fetch return response", response);
+        console.log("fetch return response", response.json());
       } catch (error) {
         console.error(error.message);
       }

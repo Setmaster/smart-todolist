@@ -1,11 +1,8 @@
 // routes/todo-api.js
 
 const express = require('express');
-const app = express();
 const router = express.Router();
 const todosQueries = require('../db/queries/todos');
-
-app.use(express.json());
 
 // Create a new todo
 router.post("/addToDo", (req, res) => {
@@ -85,7 +82,7 @@ router.delete("/deleteToDo", (req, res) => {
 
 // All todos for a given user/category
 router.post("/allTodosByCategory", (req, res) => {
-  console.log('api call category', req)
+  console.log('api call category', req.body)
   const user_id = req.session.userId;
   const category = req.body.category;
   todosQueries
