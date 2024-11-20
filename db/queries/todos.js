@@ -141,7 +141,7 @@ const toDosByCategory = function (user_id, category) {
   return db
   .query(query, [user_id, `%${category.toLowerCase()}%`])
   .then((result) => {
-    console.log(result.rows);
+    console.log('db return results', result.rows);
     return result.rows;
   })
   .catch((err) => {
