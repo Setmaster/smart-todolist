@@ -36,4 +36,9 @@ document.addEventListener('DOMContentLoaded', function() {
     }
   });
 
+  const actionButton = document.getElementById('do-it-action');
+
+  actionButton.addEventListener('click', function() {
+    registerModal.style.display = 'block';
+  });
 });
