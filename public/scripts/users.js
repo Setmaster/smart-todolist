@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const modal = document.getElementById('myModal');
-  const openModalBtn = document.getElementById('openModalBtn');
-  const closeModalBtn = document.querySelector('.login-modal-container .close');
+  const modal = document.getElementById('editModal');
+  const openModalBtn = document.getElementById('openEditModalBtn');
+  const closeModalBtn = document.querySelector('#editModal .close');
   const deleteBtn = document.querySelector('.fa-trash');
 
   openModalBtn.addEventListener('click', function (e) {
