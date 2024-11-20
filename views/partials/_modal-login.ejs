@@ -1,12 +1,12 @@
 <div id="myModal" class="login-modal-container">
   <div class="form-container">
     <span class="close">&times;</span>
-    <form class="login-form" action="/login" method="POST">
+    <form class="login-form" action="/api/users/login" method="POST">
       <label class="label-user" for="username">Username</label>
-      <input type="text" name="username" id="username" placeholder="username">
+        <label for="email"></label><input type="text" name="email" id="email" placeholder="email">
       <label class="label-pass" for="password">Password</label>
       <input type="password" name="password" id="password" placeholder="Password">
+        <button type="submit" class="btn btn-login">LOG IN NOW</button>
     </form>
-    <button class="btn btn-login">LOG IN NOW</button>
   </div>
 </div>

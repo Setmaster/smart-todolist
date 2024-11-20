@@ -81,13 +81,15 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/allToDos", (req, res) => {
-  const user_id = req.body.user_id;
+router.post("/allTodosByCategory", (req, res) => {
+  console.log('api call category', req.body)
+  const user_id = req.session.userId;
   const category = req.body.category;
   todosQueries
-    .allToDos(user_id, category)
+    .allTodosByCategory(user_id, category)
     .then((todos) => {
       if (todos) {
+        console.log('show all todos:', todos)
         return res.status(200).json(todos);
       } else {
         return res.status(404).json({ error: "No todos found" });
