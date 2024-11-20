@@ -81,11 +81,11 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/allToDos", (req, res) => {
+router.get("/allTodosByCategory", (req, res) => {
   const user_id = req.body.user_id;
   const category = req.body.category;
   todosQueries
-    .allToDos(user_id, category)
+    .allTodosByCategory(user_id, category)
     .then((todos) => {
       if (todos) {
         return res.status(200).json(todos);

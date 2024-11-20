@@ -133,7 +133,7 @@ const deleteToDo = function (id) {
  * @param {{id: string, category: string}} id
  * @return {Promise<{}>} A promise to the user.
  */
-const allToDos = function (user_id, category) {
+const allTodosByCategory = function (user_id, category) {
   const query = `
     select * from todos where user_id = $1 and category = $2
     order by complete_date desc, date_created asc
@@ -149,4 +149,4 @@ const allToDos = function (user_id, category) {
   });
 };
 
-module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allToDos };
+module.exports = { addToDo, updateToDo, completeToDo, uncompleteTodo, deleteToDo, allTodosByCategory };
