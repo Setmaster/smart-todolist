@@ -1,13 +1,14 @@
 <div id="editModal" class="modal-container">
-  <div class="form-container">
-    <span class="close">&times;</span>
-    <form class="modal-form" action="/api/todos/updateToDo" method="POST">
-      <label class="label-user" for="category">Category</label>
-      <input type="text" name="category" id="category" placeholder="Change category">
-      <label class="label-desc" for="todo">Todo Description</label>
-      <input type="text" name="todo" id="todo" placeholder="Change todo">
-      <button type="submit" class="btn">Save Edit</button>
-    </form>
-
-  </div>
+    <div class="form-container">
+        <span class="close">&times;</span>
+        <form class="modal-form">
+            <input type="hidden" name="id" id="todoId">
+            <input type="hidden" name="title" id="todoTitle">
+            <label class="label-user" for="category">Category</label>
+            <input type="text" name="category" id="category" placeholder="Change category">
+            <label class="label-desc" for="todo">Todo Description</label>
+            <input type="text" name="todo" id="todo" placeholder="Change todo">
+            <button type="button" id="saveEditBtn" class="btn">Save Edit</button>
+        </form>
+    </div>
 </div>

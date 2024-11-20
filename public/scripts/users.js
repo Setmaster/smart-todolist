@@ -9,10 +9,14 @@ document.addEventListener('DOMContentLoaded', function () {
       const todoItem = e.target.closest('li');
       const todoDescription = todoItem.querySelector('.todo-list-name p').innerText;
       const todoCategory = document.querySelector('.category-title').innerText;
+      const todoId = todoItem.dataset.id;
+      const todoTitle = todoItem.dataset.title;
 
       // Populate modal form fields
       document.getElementById('category').value = todoCategory;
       document.getElementById('todo').value = todoDescription;
+      document.getElementById('todoId').value = todoId;
+      document.getElementById('todoTitle').value = todoTitle;
 
       todoModal.style.display = 'block';
     });
@@ -28,6 +32,37 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
+  document.getElementById('saveEditBtn').addEventListener('click', function (e) {
+    e.preventDefault();
+
+    const id = document.getElementById('todoId').value;
+    const title = document.getElementById('todoTitle').value;
+    const category = document.getElementById('category').value;
+    const description = document.getElementById('todo').value;
+
+    fetch('/api/todos/updateToDo', {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id, title, category, details: description })
+    })
+      .then(response => response.json())
+      .then(data => {
+        if (data.error) {
+          console.error('Error updating todo:', data.error);
+        } else {
+          console.log('Todo updated successfully:', data);
+          // Hide the modal
+          todoModal.style.display = 'none';
+
+          // Refresh the page to reflect changes
+          location.reload();
+        }
+      })
+      .catch(error => console.error('Error:', error));
+  });
+
   // Add event listeners to each category button
   const categoryButtons = document.querySelectorAll('.category-btn');
   categoryButtons.forEach(button => {
@@ -39,7 +74,7 @@ document.addEventListener('DOMContentLoaded', function () {
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ category }) // Send the category in the request body
+          body: JSON.stringify({ category })
         });
         const todos = await response.json();
         console.log('result of response json:', todos);
@@ -55,10 +90,13 @@ document.addEventListener('DOMContentLoaded', function () {
         if (todos.length > 0) {
           todos.forEach(todo => {
             const todoItem = document.createElement('li');
+            // set the data not displayed into the dataset for later use
+            todoItem.dataset.id = todo.id;
+            todoItem.dataset.title = todo.title;
             todoItem.innerHTML = `
               <div class="todo-list-name">
                 <input type="checkbox">
-                <p>${todo.title}</p>
+                <p>${todo.details}</p>
               </div>
               <div class="todo-list-edit">
                 <i class="fas fa-edit"></i>
@@ -75,9 +113,12 @@ document.addEventListener('DOMContentLoaded', function () {
               const todoItem = e.target.closest('li');
               const todoDescription = todoItem.querySelector('.todo-list-name p').innerText;
               const todoCategory = categoryTitle.innerText;
+              const todoId = todoItem.dataset.id;
 
               document.getElementById('category').value = todoCategory;
               document.getElementById('todo').value = todoDescription;
+              document.getElementById('todoId').value = todoId;
+              document.getElementById('todoTitle').value = todoDescription;
 
               todoModal.style.display = 'block';
             });
