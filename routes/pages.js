@@ -9,6 +9,13 @@ function checkLoggedIn(req, res, next) {
   res.redirect('/'); // Redirect to landing page if not logged in
 }
 
+function attachLoginStatus(req, res, next){
+  res.locals.isLoggedIn = req.session && req.session.userId ? true : false;
+  next();
+}
+
+router.use(attachLoginStatus);
+
 // Landing page route
 router.get('/', (req, res) => {
   if (req.session && req.session.userId) {
