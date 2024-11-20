@@ -2,7 +2,7 @@
 document.addEventListener('DOMContentLoaded', function() {
   const loginModal = document.getElementById('loginModal');
   const openLoginModalBtn = document.getElementById('openLoginModalBtn');
-  const closeLoginModalBtn = document.querySelector('.login-modal-container .close');
+  const closeLoginModalBtn = document.querySelector('#loginModal .close');
 
   openLoginModalBtn.addEventListener('click', function() {
       loginModal.style.display = 'block';
@@ -20,7 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const registerModal = document.getElementById('registerModal');
   const openRegisterModalBtn = document.getElementById('openRegisterModalBtn');
-  const closeRegisterModalBtn = document.querySelector('.register-modal-container .close');
+  const closeRegisterModalBtn = document.querySelector('#registerModal .close');
 
   openRegisterModalBtn.addEventListener('click', function() {
     registerModal.style.display = 'block';
