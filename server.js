@@ -46,10 +46,3 @@ app.use('/', pagesRoutes);
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
-<<<<<<< HEAD
-
-// searchToDos(1, "movie").then((result=>{
-//   console.log(result)
-// }))
-=======
->>>>>>> 9a71984dd0426e88139ff18ec27177ebca63ffb4
