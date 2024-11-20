@@ -1,20 +1,30 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const modal = document.getElementById('editModal');
-  const openModalBtn = document.getElementById('openEditModalBtn');
-  const closeModalBtn = document.querySelector('#editModal .close');
-  const deleteBtn = document.querySelector('.fa-trash');
+  const todoModal = document.getElementById('editModal');
+  const openTodoModalBtns = document.querySelectorAll('.fa-edit');
+  const closeTodoModalBtn = document.querySelector('#editModal .close');
 
-  openModalBtn.addEventListener('click', function (e) {
-    modal.style.display = 'block';
+  openTodoModalBtns.forEach(btn => {
+    btn.addEventListener('click', function (e) {
+      // Open modal for the specific todo by finding the closest <li> element to it
+      const todoItem = e.target.closest('li');
+      const todoDescription = todoItem.querySelector('.todo-list-name p').innerText;
+      const todoCategory = document.querySelector('.category-title').innerText;
+
+      // Populate modal form fields
+      document.getElementById('category').value = todoCategory;
+      document.getElementById('todo').value = todoDescription;
+
+      todoModal.style.display = 'block';
+    });
   });
 
-  closeModalBtn.addEventListener('click', function () {
-    modal.style.display = 'none';
+  closeTodoModalBtn.addEventListener('click', function () {
+    todoModal.style.display = 'none';
   });
 
   window.addEventListener('click', function (event) {
-    if (event.target === modal) {
-      modal.style.display = 'none';
+    if (event.target === todoModal) {
+      todoModal.style.display = 'none';
     }
   });
 
@@ -31,12 +41,12 @@ document.addEventListener('DOMContentLoaded', function () {
           },
           body: JSON.stringify({ category }) // Send the category in the request body
         });
-        const todos = await response.json()
-        console.log('result of response json:', todos)
+        const todos = await response.json();
+        console.log('result of response json:', todos);
 
         // Empty all the li from ul for todolist
         const todoList = document.querySelector('.todo-list');
-        todoList.innerHTML = ''
+        todoList.innerHTML = '';
 
         // Change category title to category we clicked
         const categoryTitle = document.querySelector('.category-title');
@@ -51,12 +61,28 @@ document.addEventListener('DOMContentLoaded', function () {
                 <p>${todo.title}</p>
               </div>
               <div class="todo-list-edit">
-                <i id="openModalBtn" class="fas fa-edit"></i>
+                <i class="fas fa-edit"></i>
                 <i class="fa-solid fa-trash"></i>
               </div>
-            `
+            `;
             todoList.appendChild(todoItem);
-          })
+          });
+
+          // Re-attach event listeners for the edit buttons after dynamically adding them
+          const newOpenTodoModalBtns = todoList.querySelectorAll('.fa-edit');
+          newOpenTodoModalBtns.forEach(btn => {
+            btn.addEventListener('click', function (e) {
+              const todoItem = e.target.closest('li');
+              const todoDescription = todoItem.querySelector('.todo-list-name p').innerText;
+              const todoCategory = categoryTitle.innerText;
+
+              document.getElementById('category').value = todoCategory;
+              document.getElementById('todo').value = todoDescription;
+
+              todoModal.style.display = 'block';
+            });
+          });
+
         } else {
           todoList.innerHTML = `<p>No todos found for this category.</p>`;
         }
@@ -67,17 +93,16 @@ document.addEventListener('DOMContentLoaded', function () {
     });
   });
 
-
   const logoutBtn = document.querySelector('.btn-logout');
 
   if (logoutBtn) {
-    console.log("logout found")
+    console.log("logout found");
     logoutBtn.addEventListener('click', function() {
       fetch('api/users/logout', {
         method: 'POST',
         credentials: 'same-origin'
       })
-        .then(response=>{
+        .then(response => {
           window.location.href = '/';
         })
         .catch(error => console.error('Error:', error));
