@@ -1,4 +1,4 @@
-.login-modal-container {
+.modal-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -26,7 +26,7 @@
   background-image: linear-gradient(to right top, #e800ff, #9e70ff, #3e96ff, #00aeff, #00bdff);
   padding: 10px;
 
-  .login-form {
+  .modal-form {
     display: flex;
     flex-direction: column;
     padding: 40px 20px;

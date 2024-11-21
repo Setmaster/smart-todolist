@@ -1,9 +1,15 @@
 const db = require('../connection');
 const {generateTask} = require("../../lib/ai-utils");
 
-const addToDo = function (id, enquire) {
+/**
+ * Create a doto in the database based on provided enquiry.
+ * @param {{user_id: string, enquiry: string}} user
+ * @return {Promise<{}>} A promise to the user.
+ */
 
-  generateTask(enquire).then(({error, task})=>{
+const addToDo = function (user_id, enquiry) {
+
+  generateTask(enquiry).then(({error, task})=>{
     console.log(`Error: ${error}`);
     console.log("Generated Task:", JSON.stringify(task, null, 2));
     if (error) {
@@ -11,7 +17,7 @@ const addToDo = function (id, enquire) {
     }
     let list = {
       "title" : task["Title"],
-      "user_id": id,
+      "user_id": user_id,
       "category": task["Category"],
       "details": task["Details"]
     };
@@ -134,6 +140,7 @@ const deleteToDo = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const toDosByCategory = function (user_id, category) {
+  console.log('user id and category in database', user_id, category)
   const query = `
     select * from todos where user_id = $1 and lower(category) like $2
     order by complete_date desc, date_created asc

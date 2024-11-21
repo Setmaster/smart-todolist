@@ -1,20 +1,44 @@
 // Client facing scripts here
 document.addEventListener('DOMContentLoaded', function() {
-  const modal = document.getElementById('myModal');
-  const openModalBtn = document.getElementById('openModalBtn');
-  const closeModalBtn = document.querySelector('.login-modal-container .close');
+  const loginModal = document.getElementById('loginModal');
+  const openLoginModalBtn = document.getElementById('openLoginModalBtn');
+  const closeLoginModalBtn = document.querySelector('#loginModal .close');
 
-  openModalBtn.addEventListener('click', function() {
-      modal.style.display = 'block';
+  openLoginModalBtn.addEventListener('click', function() {
+      loginModal.style.display = 'block';
   });
 
-  closeModalBtn.addEventListener('click', function() {
-      modal.style.display = 'none';
+  closeLoginModalBtn.addEventListener('click', function() {
+      loginModal.style.display = 'none';
   });
 
   window.addEventListener('click', function(event) {
-      if (event.target === modal) {
-          modal.style.display = 'none';
+      if (event.target === loginModal) {
+          loginModal.style.display = 'none';
       }
+  });
+
+  const registerModal = document.getElementById('registerModal');
+  const openRegisterModalBtn = document.getElementById('openRegisterModalBtn');
+  const closeRegisterModalBtn = document.querySelector('#registerModal .close');
+
+  openRegisterModalBtn.addEventListener('click', function() {
+    registerModal.style.display = 'block';
+  });
+
+  closeRegisterModalBtn.addEventListener('click', function() {
+    registerModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function(event) {
+    if (event.target === registerModal) {
+      registerModal.style.display = 'none';
+    }
+  });
+
+  const actionButton = document.getElementById('do-it-action');
+
+  actionButton.addEventListener('click', function() {
+    registerModal.style.display = 'block';
   });
 });

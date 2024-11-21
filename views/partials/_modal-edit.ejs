@@ -1,13 +1,18 @@
-<div id="myModal" class="login-modal-container">
-  <div class="form-container">
-    <span class="close">&times;</span>
-    <form class="login-form" action="/login" method="POST">
-      <label class="label-user" for="category">Category</label>
-      <input type="text" name="category" placeholder="Change category">
-      <label class="label-pass" for="todo">Todo Description</label>
-      <input type="text" name="todo" placeholder="Change todo">
-      <button type="submit" class="btn">Save Edit</button>
-    </form>
-    
-  </div>
+<div id="editModal" class="modal-container">
+    <div class="form-container">
+        <span class="close">&times;</span>
+        <form class="modal-form">
+            <input type="hidden" name="id" id="todoId">
+            <input type="hidden" name="title" id="todoTitle">
+            <label class="label-user" for="category">Category</label>
+            <select name="category" id="category">
+                <% categories.forEach(function(category) { %>
+                    <option value="<%= category %>"><%= category %></option>
+                <% }); %>
+            </select>
+            <label class="label-desc" for="todo">Todo Description</label>
+            <input type="text" name="todo" id="todo" placeholder="Change todo">
+            <button type="button" id="saveEditBtn" class="btn">Save Edit</button>
+        </form>
+    </div>
 </div>

@@ -21,6 +21,7 @@ router.post("/addToDo", (req, res) => {
 });
 
 // Update todo
+//NOTE: should be changed to put later after the form is fixed
 router.put("/updateToDo", (req, res) => {
   const list = { id: req.body.id, title: req.body.title, details: req.body.details, category: req.body.category };
   todosQueries
@@ -81,8 +82,8 @@ router.delete("/deleteToDo", (req, res) => {
 });
 
 // All todos for a given user/category
-router.get("/toDosByCategory", (req, res) => {
-  const user_id = req.body.user_id;
+router.post("/toDosByCategory", (req, res) => {
+  const user_id = req.session.userId;
   const category = req.body.category;
   todosQueries
     .toDosByCategory(user_id, category)

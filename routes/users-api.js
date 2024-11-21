@@ -14,7 +14,7 @@ router.post("/createUser", (req, res) => {
     .then((newUser) => {
       if (newUser) {
         req.session.userId = newUser.id;
-        res.status(201).json({ message: "User created successfully" });
+        res.redirect('/todos'); // Redirect to /todos upon successful register
       } else {
         res.status(400).json({ error: "Failed to create user" });
       }
@@ -24,32 +24,25 @@ router.post("/createUser", (req, res) => {
 
 // Log a user in
 router.post("/login", (req, res) => {
-  console.log("Logging");
   const email = req.body.email;
   const password = req.body.password;
 
   userQueries.getUserWithEmail(email)
     .then((user) => {
-      // if (!user || !bcrypt.compareSync(password, user.password)) {
-      //   return res.status(401).json({ error: "Invalid email or password" });
-      // }
+      if (!user || !bcrypt.compareSync(password, user.password)) {
+        return res.status(401).send("Invalid email or password");
+      }
 
       req.session.userId = user.id;
-      res.status(200).json({
-        user: {
-          name: user.name,
-          email: user.email,
-          id: user.id,
-        },
-      });
+      res.redirect('/todos'); // Redirect to /todos upon successful login
     })
-    .catch((e) => res.status(500).json({ error: "Internal server error" }));
+    .catch((e) => res.status(500).send("Internal server error"));
 });
 
 // Log a user out
 router.post("/logout", (req, res) => {
   req.session.userId = null;
-  res.status(200).json({ message: "Logout successful" });
+  res.redirect('/'); // Redirect to landing page upon logout
 });
 
 // Return information about the current user (based on cookie value)
