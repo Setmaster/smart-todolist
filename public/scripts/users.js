@@ -99,7 +99,7 @@ document.addEventListener('DOMContentLoaded', function () {
             todoItem.dataset.title = todo.title;
             todoItem.innerHTML = `
             <div class="todo-list-name">
-              <input type="checkbox">
+            <input type="checkbox" class="todo-checkbox" ${todo.complete_date ? 'checked' : ''}>
               <p>${todo.details}</p>
             </div>
             <div class="todo-list-edit">
