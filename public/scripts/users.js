@@ -135,7 +135,7 @@ function updateTodoList(todos, category) {
 
     attachDynamicTodoEventListeners(todoList);
   } else {
-    todoList.innerHTML = `<p>No todos found for this category.</p>`;
+    todoList.innerHTML = `<p class="noTodos">No todos found for this category.</p>`;
   }
 }
 
