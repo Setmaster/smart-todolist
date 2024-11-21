@@ -7,7 +7,7 @@
             <label class="label-user" for="category">Category</label>
             <select name="category" id="category">
                 <% categories.forEach(function(category) { %>
-                    <option value="<%= category %>"><%= category %></option>
+                    <option class="category-option" value="<%= category %>"><%= category %></option>
                 <% }); %>
             </select>
             <label class="label-desc" for="todo">Todo Description</label>
