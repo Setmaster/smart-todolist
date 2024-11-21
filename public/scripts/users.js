@@ -168,11 +168,13 @@ document.addEventListener('DOMContentLoaded', function () {
         },
         body: JSON.stringify({enquire: addTodoText})
       })
+
+      const todo = await response.json();
+      console.log(todo)
     } catch (error) {
       console.error(error.message);
     }
-    const todo = await response.json();
-    
+
   })
 
 });
