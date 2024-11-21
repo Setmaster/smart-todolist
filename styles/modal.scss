@@ -35,7 +35,7 @@
       width: 200px;
       height: 40px;
       background: #e0dede;
-      margin: 20px auto;
+      margin: 5px auto;
       padding: 12px;
       border: none;
       outline: none;
@@ -43,11 +43,41 @@
     }
 
     label {
+      font-size: 1.5rem;
+      margin: 10px auto;
+    }
+
+    .btn {
+      margin-top: 20px;
+    }
+
+    #category {
+      cursor: pointer;
+      background-color: white;
+      height: 40px;
+      width: 150px;
       margin: auto;
+      border: none;
+      text-align: center;
+      border-radius: 5px;
+    }
+
+    #todo {
+      width: 100%;
+      background-color: white;
+    }
+
+    .category-option {
+      color: black;
+
+      &:hover {
+        background-color: lightpink;
+      }
     }
   }
 
   button {
     margin: auto 70px;
   }
+
 }

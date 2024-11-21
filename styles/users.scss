@@ -136,6 +136,11 @@
         p {
           padding-left: 10px;
         }
+
+        .todo-checkbox {
+          accent-color: black;
+        }
+
       }
 
       .todo-list-edit {
@@ -149,6 +154,10 @@
     }
   }
 
+}
+
+.noTodos {
+  padding-left: 15px;
 }
 
 .fa-edit {
