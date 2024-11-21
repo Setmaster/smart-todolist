@@ -242,7 +242,26 @@ function initializeAddTodo() {
         console.error('Error adding todo:', todo.error);
       } else {
         console.log('Todo added successfully:', todo);
-        window.location.href = '/';
+        // optimistically update todo
+        const todoList = document.querySelector('.todo-list');
+        const todoItem = document.createElement('li');
+        todoItem.dataset.id = todo.id;
+        todoItem.dataset.title = todo.title;
+        todoItem.dataset.category = todo.category;
+        todoItem.innerHTML = `
+          <div class="todo-list-name">
+            <input type="checkbox" class="todo-checkbox">
+            <p>${todo.details}</p>
+          </div>
+          <div class="todo-list-edit">
+            <i class="fas fa-edit"></i>
+            <i class="fa-solid fa-trash"></i>
+          </div>
+        `;
+        todoList.appendChild(todoItem);
+
+        // Reattach event listeners to the new list
+        attachDynamicTodoEventListeners(todoList);
       }
     } catch (error) {
       console.error('Error:', error.message);
@@ -253,6 +272,7 @@ function initializeAddTodo() {
     }
   });
 }
+
 
 function initializeEditUserModal() {
   const editUserModal = document.getElementById('editUserModal');
