@@ -19,6 +19,7 @@ nav {
 
   .fa-pencil {
     margin-right: 10px;
+    color: blue;
   }
 }
 
@@ -39,7 +40,16 @@ nav {
     &:hover{
       box-shadow: 0 8px 22px 0 rgb(37 44 97 / 15%), 0 4px 6px 0 rgb(93 100 148 / 20%);
     }
-  
+
+}
+
+.user-email {
+  font-weight: bold;
+  margin-right: 10px;
+  padding: 10px;
+  border: 2px solid lightpink;
+  border-radius: 20px;
+  cursor: default;
 }
 
 
