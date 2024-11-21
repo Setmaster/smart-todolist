@@ -45,3 +45,11 @@ app.use('/', pagesRoutes);
 app.listen(PORT, () => {
   console.log(`Example app listening on port ${PORT}`);
 });
+
+const {generateTask} = require("./lib/ai-utils");
+
+// Example usage
+generateTask("Watch Harry Potter with my girlfriend").then(({error, task})=>{
+  console.log(`Error: ${error}`);
+  console.log("Generated Task:", JSON.stringify(task, null, 2));
+});

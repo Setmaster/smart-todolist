@@ -22,8 +22,9 @@
   <script src="/vendor/jquery-3.0.0.js"></script>
   <script defer src="/scripts/users.js"></script>
 </head>
- <%- include('partials/_nav') %>
+<%- include('partials/_nav') %>
 <%- include('partials/_modal-edit') %>
+<%- include('partials/_modal-addTodo') %>
 <body>
   <section class="main-container">
     <div class="sidebar">
@@ -67,8 +68,14 @@
       </ul>
     </div>
     <div class="todo-container">
+      <div class="addToDo-box">
+        <input type="text" name="search" placeholder="Write your todo">
+        <i id="addTodo" class="fa-solid fa-plus fa-2xl"></i>
+      </div>
       <div class="todo-list-container">
-        <h2 class="category-title">Watch</h2>
+        <div class="todo-list-header">
+          <h2 class="category-title">Watch</h2>
+        </div>
         <ul class="todo-list">
           <li>
             <div class="todo-list-name">

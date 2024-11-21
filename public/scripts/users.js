@@ -1,3 +1,5 @@
+const { response } = require("express");
+
 document.addEventListener('DOMContentLoaded', function () {
   const modal = document.getElementById('editModal');
   const openModalBtn = document.getElementById('openEditModalBtn');
@@ -17,6 +19,8 @@ document.addEventListener('DOMContentLoaded', function () {
       modal.style.display = 'none';
     }
   });
+
+
 
   // Add event listeners to each category button
   const categoryButtons = document.querySelectorAll('.category-btn');
@@ -46,32 +50,17 @@ document.addEventListener('DOMContentLoaded', function () {
           todos.forEach(todo => {
             const todoItem = document.createElement('li');
             const isComplete = todo.complete_date;
-            if (isComplete) {
-              todoItem.innerHTML = `
-              <div class="todo-list-name">
-                <label>Complete</label>
-                <input type="checkbox" checked>
-                <p>${todo.title}</p>
-              </div>
-              <div class="todo-list-edit">
-                <i id="openModalBtn" class="fas fa-edit"></i>
-                <i class="fa-solid fa-trash"></i>
-              </div>
-              `
-            } else {
-              todoItem.innerHTML = `
-              <div class="todo-list-name">
-                <label>Complete</label>
-                <input type="checkbox">
-                <p>${todo.title}</p>
-              </div>
-              <div class="todo-list-edit">
-                <i id="openModalBtn" class="fas fa-edit"></i>
-                <i class="fa-solid fa-trash"></i>
-              </div>
-              `
-            }
-
+            todoItem.innerHTML = `
+            <div class="todo-list-name">
+              <label>Complete</label>
+              <input type="checkbox" ${isComplete ? 'checked' : ''}>
+              <p>${todo.title}</p>
+            </div>
+            <div class="todo-list-edit">
+              <i id="openModalBtn" class="fas fa-edit"></i>
+              <i class="fa-solid fa-trash"></i>
+            </div>
+            `
             todoList.appendChild(todoItem);
           })
         } else {
@@ -86,7 +75,6 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   const logoutBtn = document.querySelector('.btn-logout');
-
   if (logoutBtn) {
     console.log("logout found")
     logoutBtn.addEventListener('click', function() {
@@ -100,4 +88,25 @@ document.addEventListener('DOMContentLoaded', function () {
         .catch(error => console.error('Error:', error));
     });
   }
+
+  const addTodoBtn = document.getElementById('addTodo');
+  addTodoBtn.addEventListener('click', async function(e) {
+    try {
+      console.log('add todo button:', e.target.previousElementSibling.value)
+      const addTodoText = e.target.previousElementSibling.value;
+      const response = await fetch('/api/todos/addToDo', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({enquire: addTodoText})
+      })
+    } catch (error) {
+      console.error(error.message);
+    }
+    const todo = await response.json();
+    
+  })
+
 });
+
