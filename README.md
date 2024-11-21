@@ -5,9 +5,10 @@ Smart Todolist
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information 
-  - username: <your username>
-  - password: `<your password>
-  - database: <your database>
+  - DB_HOST: <your databae host address>
+  - DB_USER: <your database user>
+  - DB_PASS: <your database password>
+  - DB_NAME= <your database name>
   - DB_PORT= <db port of your choice
   - AI_API_KEY=<Gemni API key>
   - SESSION_SECRET=<session secret>
