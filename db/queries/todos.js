@@ -8,49 +8,47 @@ const {generateTask} = require("../../lib/ai-utils");
  */
 
 const addToDo = function (user_id, enquiry) {
-
-  generateTask(enquiry).then(({error, task})=>{
+  return generateTask(enquiry).then(({error, task}) => {
     console.log(`Error: ${error}`);
     console.log("Generated Task:", JSON.stringify(task, null, 2));
     if (error) {
-      return;
+      return Promise.reject(new Error("Task generation failed"));
     }
     let list = {
-      "title" : task["Title"],
+      "title": task["Title"],
       "user_id": user_id,
       "category": task["Category"],
       "details": task["Details"]
     };
     const query = `
-    INSERT INTO
-    todos
-    (
-      title,
-      user_id,
-      category,
-      details
-    )
-    VALUES
-    ($1, $2, $3, $4)
-    RETURNING *
-  `;
-  const queryParams =
-  [
-    list.title,
-    list.user_id,
-    list.category,
-    list.details
-  ];
+      INSERT INTO
+      todos
+      (
+        title,
+        user_id,
+        category,
+        details
+      )
+      VALUES
+      ($1, $2, $3, $4)
+      RETURNING *
+    `;
+    const queryParams = [
+      list.title,
+      list.user_id,
+      list.category,
+      list.details
+    ];
 
-  return db
-  .query(query, queryParams)
-  .then((result) => {
-   console.log(result.rows[0]);
-    return result.rows[0];
-  })
-  .catch((err) => {
-    console.log(err.message);
-  });
+    return db.query(query, queryParams)
+      .then((result) => {
+        console.log(result.rows[0]);
+        return result.rows[0];
+      })
+      .catch((err) => {
+        console.log(err.message);
+        throw err;
+      });
   });
 };
 
