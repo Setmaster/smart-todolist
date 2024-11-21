@@ -4,6 +4,7 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeLogout();
   initializeAddTodo();
   initializeEditUserModal();
+  initializeSearch();
 });
 
 function initializeTodoModal() {
@@ -309,4 +310,30 @@ async function submitEditUserForm(e) {
   } catch (error) {
     console.error('Error:', error);
   }
+}
+
+function initializeSearch() {
+  const searchInput = document.getElementById('searchInput');
+
+  searchInput.addEventListener('input', async function() {
+    const query = searchInput.value.trim();
+    if (query.length > 0) {
+      try {
+        const response = await fetch(`/api/todos/searchToDos?searching_key=${encodeURIComponent(query)}`);
+        const todos = await response.json();
+
+        if (response.ok) {
+          updateTodoList(todos, 'Search');
+        } else {
+          console.error('Error fetching search results:', todos.error);
+        }
+      } catch (error) {
+        console.error('Search Error:', error);
+      }
+    }
+    else {
+      // return user the last category they were in
+      await handleCategoryClick({currentTarget: document.querySelector('.category-links--item')});
+    }
+  });
 }

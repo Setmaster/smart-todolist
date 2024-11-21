@@ -172,7 +172,7 @@ const searchToDos = function (user_id, searchingKey) {
       return result.rows;
     })
     .catch((err) => {
-      console.log(err.message);
+      throw err; // propagate error
     });
 };
 
