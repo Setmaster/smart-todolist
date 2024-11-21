@@ -1,5 +1,3 @@
-const { response } = require("express");
-
 document.addEventListener('DOMContentLoaded', function () {
   const todoModal = document.getElementById('editModal');
   const openTodoModalBtns = document.querySelectorAll('.fa-edit');
@@ -142,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
   const logoutBtn = document.querySelector('.btn-logout');
+
   if (logoutBtn) {
     console.log("logout found");
     logoutBtn.addEventListener('click', function() {
@@ -178,4 +177,5 @@ document.addEventListener('DOMContentLoaded', function () {
   })
 
 });
+
 
