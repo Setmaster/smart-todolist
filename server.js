@@ -43,7 +43,7 @@ app.use('/api/todos', todosAPIRoutes);
 app.use('/', pagesRoutes);
 
 app.listen(PORT, () => {
-  console.log(`Example app listening on port ${PORT}`);
+  console.log(`Smart Todolist app listening on port ${PORT}`);
 });
 
 const {generateTask} = require("./lib/ai-utils");
