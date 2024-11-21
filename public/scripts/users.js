@@ -225,6 +225,8 @@ function initializeLogout() {
 function initializeAddTodo() {
   const addTodoBtn = document.getElementById('addTodo');
   addTodoBtn.addEventListener('click', async function (e) {
+    addTodoBtn.disabled = true;
+    addTodoBtn.classList.add('rotating');
     try {
       const addTodoText = e.target.previousElementSibling.value;
       const response = await fetch('/api/todos/addToDo', {
@@ -236,10 +238,18 @@ function initializeAddTodo() {
       });
 
       const todo = await response.json();
-      console.log(todo);
-      window.location.href = '/';
+      if (!response.ok) {
+        console.error('Error adding todo:', todo.error);
+      } else {
+        console.log('Todo added successfully:', todo);
+        window.location.href = '/';
+      }
     } catch (error) {
-      console.error(error.message);
+      console.error('Error:', error.message);
+    } finally {
+      // enable and stop spin
+      addTodoBtn.classList.remove('rotating');
+      addTodoBtn.disabled = false;
     }
   });
 }
