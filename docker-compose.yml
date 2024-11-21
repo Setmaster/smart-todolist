@@ -23,5 +23,24 @@
       POSTGRES_DB: smart-todolist
     restart: "no"
 
+  express-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: express_smart_todolist
+    ports:
+      - "${APP_PORT}:8080"
+    depends_on:
+      - postgres
+    environment:
+      DB_HOST: postgres
+      DB_PORT: 5432
+      DB_USER: labber
+      DB_PASSWORD: labber
+      DB_NAME: smart-todolist
+    volumes:
+      - .:/usr/src/app
+    command: npm start
+
 volumes:
   postgres_data:
