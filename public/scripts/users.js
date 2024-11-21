@@ -170,11 +170,79 @@ document.addEventListener('DOMContentLoaded', function () {
 
       const todo = await response.json();
       console.log(todo)
+      window.location.href = '/';
     } catch (error) {
       console.error(error.message);
     }
 
   })
+
+  const editUserModal = document.getElementById('editUserModal');
+  const userEmailSpan = document.querySelector('.user-email');
+  const closeEditUserModalBtn = document.querySelector('#editUserModal .close');
+
+  if (userEmailSpan) {
+    userEmailSpan.addEventListener('click', async function () {
+      try {
+        const response = await fetch('/api/users/me');
+        const data = await response.json();
+
+        if (response.ok) {
+          // Prefill
+          document.getElementById('name').value = data.user.name;
+
+          editUserModal.style.display = 'block';
+        } else {
+          console.error('Error fetching user data:', data.message);
+        }
+      } catch (error) {
+        console.error('Error:', error);
+      }
+    });
+  }
+
+  closeEditUserModalBtn.addEventListener('click', function () {
+    editUserModal.style.display = 'none';
+  });
+
+  window.addEventListener('click', function (event) {
+    if (event.target === editUserModal) {
+      editUserModal.style.display = 'none';
+    }
+  });
+
+  // Add submit handler for the user edit form
+  const editUserForm = document.querySelector('#editUserModal form');
+  editUserForm.addEventListener('submit', async function (e) {
+    e.preventDefault();
+
+    const userId = userEmailSpan.dataset.userId;
+    const name = document.getElementById('name').value;
+    const password = document.getElementById('password').value;
+
+    try {
+      const response = await fetch(`/api/users/${userId}/update`, {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ name, password })
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        console.log('User updated successfully:', result);
+        editUserModal.style.display = 'none';
+
+        // Optionally update the UI to reflect the new details
+        userEmailSpan.textContent = result.user.email;
+      } else {
+        console.error('Error updating user:', result.error);
+      }
+    } catch (error) {
+      console.error('Error:', error);
+    }
+  });
 
 });
 

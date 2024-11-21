@@ -33,7 +33,9 @@ router.get('/todos', checkLoggedIn, async (req, res) => {
     const user = await getUserWithId(req.session.userId);
     const templateVars = {
       categories,
-      userEmail: user.email
+      userEmail: user.email,
+      userId: user.id,
+      userName: user.name
     };
     res.render('todos', templateVars); // Render todos page if logged in
   } catch (e) {
