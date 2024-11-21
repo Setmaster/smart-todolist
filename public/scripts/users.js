@@ -95,6 +95,7 @@ document.addEventListener('DOMContentLoaded', function () {
           todos.forEach(todo => {
             const todoItem = document.createElement('li');
             // Set the data not displayed into the dataset for later use
+
             todoItem.dataset.id = todo.id;
             todoItem.dataset.title = todo.title;
             todoItem.innerHTML = `
@@ -125,6 +126,33 @@ document.addEventListener('DOMContentLoaded', function () {
               document.getElementById('todoTitle').value = todoDescription;
 
               todoModal.style.display = 'block';
+            });
+          });
+
+          // add a delete event for every todo item created
+          const deleteTodoBtns = todoList.querySelectorAll('.fa-trash');
+          deleteTodoBtns.forEach(btn => {
+            btn.addEventListener('click', async function (e) {
+              try {
+                const todoItem = e.target.closest('li');
+                const todoId = todoItem.dataset.id;
+
+                const response = await fetch('/api/todos/deleteToDo', {
+                  method: 'DELETE',
+                  headers: {
+                    'Content-Type': 'application/json'
+                  },
+                  body: JSON.stringify({id: todoId})
+                })
+
+                const deleteResponse = await response.json();
+                console.log(deleteResponse)
+
+                location.reload();
+
+              } catch (error) {
+                console.error(error.message);
+              }
             });
           });
 
