@@ -2,6 +2,7 @@
 const router = express.Router();
 const {categories} = require('../lib/ai-utils');
 const {getUserWithId} = require("../db/queries/users");
+const {toDosByCategory} = require("../db/queries/todos");
 
 // Middleware to check if user is logged in
 function checkLoggedIn(req, res, next) {
@@ -31,11 +32,19 @@ router.get('/', (req, res) => {
 router.get('/todos', checkLoggedIn, async (req, res) => {
   try {
     const user = await getUserWithId(req.session.userId);
+    // Fetch default category todos
+    const lastCategory = req.session.lastCategory || 'Watch';
+    const defaultTodos = await toDosByCategory(user.id, lastCategory);
+
     const templateVars = {
       categories,
-      userEmail: user.email
+      userEmail: user.email,
+      userId: user.id,
+      userName: user.name,
+      todos: defaultTodos,
+      categoryName: lastCategory
     };
-    res.render('todos', templateVars); // Render todos page if logged in
+    res.render('todos', templateVars);
   } catch (e) {
     console.error(e);
     res.status(500).send("Internal server error");

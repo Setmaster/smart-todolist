@@ -78,7 +78,12 @@ router.put("/:id/update", (req, res) => {
   }
 
   const { name, password } = req.body;
-  const updatedUser = { id: userId, name, password: bcrypt.hashSync(password, 12) };
+  let updatedUser;
+  if (password === ""){
+    updatedUser = { id: userId, name, password: null };
+  }else{
+    updatedUser = { id: userId, name, password: bcrypt.hashSync(password, 12) };
+  }
 
   userQueries
     .updateUser(updatedUser)

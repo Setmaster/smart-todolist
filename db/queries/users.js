@@ -64,7 +64,7 @@ const addUser = function (user) {
  */
 const updateUser = function (user) {
   const query = `
-    update users set name = $1, password = $3 where id = $2 RETURNING *
+    update users set name = $1, password = COALESCE ($3 , password) where id = $2 RETURNING *
   `;
   return db
   .query(query, [user.name,user.id, user.password])

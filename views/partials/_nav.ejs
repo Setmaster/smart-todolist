@@ -8,7 +8,7 @@
             <button id="openLoginModalBtn" class="btn btn-signin">Sign In</button>
             <button id="openRegisterModalBtn" class="btn btn-register">Register</button>
         <% } else { %>
-            <span class="user-email"><%= userEmail %></span>
+                <span class="user-email" data-user-id="<%= userId %>"><%= userEmail %></span>
             <button class="btn btn-logout">Logout</button>
         <% } %>
     </div>
