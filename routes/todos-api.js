@@ -23,7 +23,7 @@ router.post("/addToDo", (req, res) => {
 
 // Update todo
 //NOTE: should be changed to put later after the form is fixed
-router.post("/updateToDo", (req, res) => {
+router.put("/updateToDo", (req, res) => {
   const list = { id: req.body.id, title: req.body.title, details: req.body.details, category: req.body.category };
   todosQueries
     .updateToDo(list)
