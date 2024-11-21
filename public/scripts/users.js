@@ -130,13 +130,13 @@ function updateTodoList(todos, category) {
       todoList.appendChild(todoItem);
     });
 
-    attachDynamicTodoEventListeners(todoList, category);
+    attachDynamicTodoEventListeners(todoList);
   } else {
     todoList.innerHTML = `<p>No todos found for this category.</p>`;
   }
 }
 
-function attachDynamicTodoEventListeners(todoList, category) {
+function attachDynamicTodoEventListeners(todoList) {
   const newOpenTodoModalBtns = todoList.querySelectorAll('.fa-edit');
   newOpenTodoModalBtns.forEach(btn => {
     btn.addEventListener('click', openTodoModal);
@@ -145,6 +145,11 @@ function attachDynamicTodoEventListeners(todoList, category) {
   const deleteTodoBtns = todoList.querySelectorAll('.fa-trash');
   deleteTodoBtns.forEach(btn => {
     btn.addEventListener('click', deleteTodo);
+  });
+
+  const todoCheckboxes = todoList.querySelectorAll('.todo-checkbox');
+  todoCheckboxes.forEach(checkbox => {
+    checkbox.addEventListener('change', toggleTodoComplete);
   });
 }
 
@@ -166,6 +171,32 @@ async function deleteTodo(e) {
     location.reload();
   } catch (error) {
     console.error(error.message);
+  }
+}
+
+async function toggleTodoComplete(e) {
+  const checkbox = e.target;
+  const todoItem = checkbox.closest('li');
+  const todoId = todoItem.dataset.id;
+
+  try {
+    const url = checkbox.checked ? '/api/todos/completeToDo' : '/api/todos/uncompleteTodo';
+    const response = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({ id: todoId })
+    });
+
+    const result = await response.json();
+    if (!response.ok) {
+      console.error('Error updating todo status:', result.error);
+    } else {
+      console.log('Todo status updated successfully:', result);
+    }
+  } catch (error) {
+    console.error('Error:', error);
   }
 }
 
