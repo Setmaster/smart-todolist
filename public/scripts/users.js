@@ -33,7 +33,7 @@ function openTodoModal(e) {
   const todoModal = document.getElementById('editModal');
   const todoItem = e.target.closest('li');
   const todoDescription = todoItem.querySelector('.todo-list-name p').innerText;
-  const todoCategory = document.querySelector('.category-title').innerText;
+  const todoCategory = todoItem.dataset.category;
   const todoId = todoItem.dataset.id;
   const todoTitle = todoItem.dataset.title;
 
@@ -46,6 +46,7 @@ function openTodoModal(e) {
 
   todoModal.style.display = 'block';
 }
+
 
 async function saveTodoEdit(e) {
   e.preventDefault();
@@ -118,6 +119,7 @@ function updateTodoList(todos, category) {
       const todoItem = document.createElement('li');
       todoItem.dataset.id = todo.id;
       todoItem.dataset.title = todo.title;
+      todoItem.dataset.category = todo.category;
       todoItem.innerHTML = `
         <div class="todo-list-name">
           <input type="checkbox" class="todo-checkbox" ${todo.complete_date ? 'checked' : ''}>
@@ -136,6 +138,7 @@ function updateTodoList(todos, category) {
     todoList.innerHTML = `<p>No todos found for this category.</p>`;
   }
 }
+
 
 function attachDynamicTodoEventListeners(todoList) {
   const newOpenTodoModalBtns = todoList.querySelectorAll('.fa-edit');
