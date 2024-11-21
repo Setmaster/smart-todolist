@@ -86,6 +86,7 @@ router.delete("/deleteToDo", (req, res) => {
 router.post("/toDosByCategory", (req, res) => {
   const user_id = req.session.userId;
   const category = req.body.category;
+  req.session.lastCategory = category;
   todosQueries
     .toDosByCategory(user_id, category)
     .then((todos) => {

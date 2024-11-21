@@ -33,14 +33,16 @@ router.get('/todos', checkLoggedIn, async (req, res) => {
   try {
     const user = await getUserWithId(req.session.userId);
     // Fetch default category todos
-    const defaultTodos = await toDosByCategory(user.id, 'Watch');
+    const lastCategory = req.session.lastCategory || 'Watch';
+    const defaultTodos = await toDosByCategory(user.id, lastCategory);
 
     const templateVars = {
       categories,
       userEmail: user.email,
       userId: user.id,
       userName: user.name,
-      todos: defaultTodos
+      todos: defaultTodos,
+      categoryName: lastCategory
     };
     res.render('todos', templateVars);
   } catch (e) {
