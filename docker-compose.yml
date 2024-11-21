@@ -11,5 +11,17 @@
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
+  init:
+    build:
+      context: .
+      dockerfile: Dockerfile.init
+    depends_on:
+      - postgres
+    environment:
+      POSTGRES_USER: labber
+      POSTGRES_PASSWORD: labber
+      POSTGRES_DB: smart-todolist
+    restart: "no"
+
 volumes:
   postgres_data:
