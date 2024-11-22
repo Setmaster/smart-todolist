@@ -141,7 +141,7 @@ const toDosByCategory = function (user_id, category) {
   console.log('user id and category in database', user_id, category)
   const query = `
     select * from todos where user_id = $1 and lower(category) like $2
-    order by complete_date desc, date_created asc
+    order by complete_date desc, date_created desc
   `;
   return db
   .query(query, [user_id, `%${category.toLowerCase()}%`])
@@ -163,7 +163,7 @@ const searchToDos = function (user_id, searchingKey) {
   const query = `
     SELECT * FROM todos WHERE user_id = $1
     AND (LOWER(title) LIKE $2 OR LOWER(details) LIKE $2)
-    ORDER BY complete_date DESC, date_created ASC;
+    ORDER BY complete_date DESC, date_created desc;
   `;
   return db
     .query(query, [user_id, `%${searchingKey.toLowerCase()}%`])
