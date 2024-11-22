@@ -1,6 +1,6 @@
 Smart Todolist
 =========
-[![Demo](documents/thumnail.png)](https://raw.githubusercontent.com/Setmaster/smart-todolist/master/documents/demo.mp4)
+https://github.com/user-attachments/assets/e6501bba-fd7b-444d-a731-cc1427512add
 
 ## Getting Started
 
