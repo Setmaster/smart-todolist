@@ -251,7 +251,7 @@ function initializeAddTodo() {
         todoItem.dataset.id = todo.id;
         todoItem.dataset.title = todo.title;
         todoItem.dataset.category = todo.category;
-        if (todoItem.dataset.category === categoryName ){
+        if (todoItem.dataset.category === categoryNameVar ){
           // optimistically update todo
           const todoList = document.querySelector('.todo-list');
           const todoItem = document.createElement('li');
