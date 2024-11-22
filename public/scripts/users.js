@@ -277,7 +277,7 @@ function initializeAddTodo() {
             <i class="fa-solid fa-trash"></i>
           </div>
         `;
-          todoList.appendChild(todoItem);
+          todoList.prepend(todoItem);
         }
 
         addTodoTextElement.value = '';
