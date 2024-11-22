@@ -229,8 +229,11 @@ function initializeLogout() {
 function initializeAddTodo() {
   const addTodoBtn = document.getElementById('addTodo');
   addTodoBtn.addEventListener('click', async function (e) {
+
+    //disable and start spin
     addTodoBtn.disabled = true;
     addTodoBtn.classList.add('rotating');
+
     try {
       const addTodoTextElement = e.target.previousElementSibling;
       const addTodoText = addTodoTextElement.value.trim();
