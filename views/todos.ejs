@@ -110,7 +110,7 @@
             <ul class="todo-list">
                 <% if (todos.length > 0) { %>
                     <% todos.forEach(function(todo) { %>
-                        <li data-id="<%= todo.id %>" data-title="<%= todo.title %>">
+                        <li data-id="<%= todo.id %>" data-title="<%= todo.title %>" data-category="<%= todo.category %>">
                             <div class="todo-list-name">
                                 <input type="checkbox" class="todo-checkbox" <%= todo.complete_date ? 'checked' : '' %>>
                                 <p><%= todo.details %></p>

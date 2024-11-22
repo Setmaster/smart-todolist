@@ -5,6 +5,10 @@ document.addEventListener('DOMContentLoaded', function () {
   initializeAddTodo();
   initializeEditUserModal();
   initializeSearch();
+
+  // attach event listeners on initial load
+  const todoList = document.querySelector('.todo-list');
+  attachDynamicTodoEventListeners(todoList);
 });
 
 function initializeTodoModal() {
