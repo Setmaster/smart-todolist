@@ -228,15 +228,16 @@ function initializeLogout() {
 
 function initializeAddTodo() {
   const addTodoBtn = document.getElementById('addTodo');
-  addTodoBtn.addEventListener('click', async function (e) {
+  const addTodoInput = document.getElementById('addTodo-input');
 
+  const handleAddTodo = async function() {
     //disable and start spin
     addTodoBtn.disabled = true;
+    addTodoInput.disabled = true
     addTodoBtn.classList.add('rotating');
 
     try {
-      const addTodoTextElement = e.target.previousElementSibling;
-      const addTodoText = addTodoTextElement.value.trim();
+      const addTodoText = addTodoInput.value.trim();
       const response = await fetch('/api/todos/addToDo', {
         method: 'POST',
         headers: {
@@ -282,7 +283,7 @@ function initializeAddTodo() {
           todoList.prepend(todoItem);
         }
 
-        addTodoTextElement.value = '';
+        addTodoInput.value = '';
 
         // Reattach event listeners to the new list
         attachDynamicTodoEventListeners(todoList);
@@ -293,8 +294,16 @@ function initializeAddTodo() {
       // enable and stop spin
       addTodoBtn.classList.remove('rotating');
       addTodoBtn.disabled = false;
+      addTodoInput.disabled = false;
     }
-  });
+  }
+
+  addTodoInput.addEventListener('keyup', function (e) {
+    if (e.key === 'Enter') {
+      handleAddTodo();
+    }
+  })
+  addTodoBtn.addEventListener('click', handleAddTodo)
 }
 
 
