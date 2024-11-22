@@ -62,7 +62,6 @@ async function saveTodoEdit(e) {
   const description = document.getElementById('todo').value;
 
   try {
-    console.log("My save todo:", JSON.stringify({ id, title: description, category }))
     const response = await fetch('/api/todos/updateToDo', {
       method: 'PUT',
       headers: {
@@ -253,13 +252,13 @@ function initializeAddTodo() {
       if (!response.ok) {
         console.error('Error adding todo:', todo.error);
       } else {
-        console.log('Todo added successfully:', todo);
+        console.log('Todo added successfully to database:', todo);
         const todoList = document.querySelector('.todo-list');
         const todoItem = document.createElement('li');
         todoItem.dataset.id = todo.id;
         todoItem.dataset.title = todo.title;
         todoItem.dataset.category = todo.category;
-        console.log("Category check", todoItem.dataset.category, category)
+
         if (todoItem.dataset.category === category ){
           // optimistically update todo
           const todoList = document.querySelector('.todo-list');
