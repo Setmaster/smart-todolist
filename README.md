@@ -6,14 +6,14 @@ https://github.com/user-attachments/assets/4d6ae49f-03fb-4385-bfa8-71283067693b
 
 1. Create the `.env` by using `.env.example` as a reference: `cp .env.example .env`
 2. Update the .env file with your correct local information 
-  - DB_HOST: <your databae host address>
-  - DB_USER: <your database user>
-  - DB_PASS: <your database password>
-  - DB_NAME= <your database name>
-  - DB_PORT= <database port of your choice
-  - AI_API_KEY=<Gemni API key>
-  - SESSION_SECRET=<session secret>
-  - APP_PORT=<app port of your choice>
+  - DB_HOST: your database host address
+  - DB_USER: your database user
+  - DB_PASS: your database password
+  - DB_NAME: your database name
+  - DB_PORT: your database port
+  - AI_API_KEY: your Gemni API key
+  - SESSION_SECRET: your session secret
+  - APP_PORT= your app port
 3. Install dependencies: `npm i`
 4. Fix to binaries for sass: `npm rebuild node-sass`
 5. Reset database: `npm run db:reset`
