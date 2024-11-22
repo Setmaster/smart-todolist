@@ -1,6 +1,6 @@
 Smart Todolist
 =========
-https://github.com/user-attachments/assets/e6501bba-fd7b-444d-a731-cc1427512add
+https://github.com/user-attachments/assets/4d6ae49f-03fb-4385-bfa8-71283067693b
 
 ## Getting Started
 
