@@ -73,7 +73,7 @@ async function saveTodoEdit(e) {
     if (data.error) {
       console.error('Error updating todo:', data.error);
     } else {
-      console.log('Todo updated successfully:', data);
+      //console.log('Todo updated successfully:', data);
       todoModal.style.display = 'none';
        location.reload(); // Refresh the page to reflect changes
     }
@@ -103,7 +103,7 @@ async function handleCategoryClick(e) {
       body: JSON.stringify({ category })
     });
     const todos = await response.json();
-    console.log('result of response json:', todos);
+    //console.log('result of response json:', todos);
 
     updateTodoList(todos, category);
   } catch (error) {
@@ -175,7 +175,7 @@ async function deleteTodo(e) {
     });
 
     const deleteResponse = await response.json();
-    console.log(deleteResponse);
+    //console.log(deleteResponse);
     location.reload();
   } catch (error) {
     console.error(error.message);
@@ -201,7 +201,7 @@ async function toggleTodoComplete(e) {
     if (!response.ok) {
       console.error('Error updating todo status:', result.error);
     } else {
-      console.log('Todo status updated successfully:', result);
+      //console.log('Todo status updated successfully:', result);
     }
   } catch (error) {
     console.error('Error:', error);
@@ -211,7 +211,7 @@ async function toggleTodoComplete(e) {
 function initializeLogout() {
   const logoutBtn = document.querySelector('.btn-logout');
   if (logoutBtn) {
-    console.log("logout found");
+    //console.log("logout found");
     logoutBtn.addEventListener('click', async function () {
       try {
         await fetch('api/users/logout', {
@@ -259,7 +259,7 @@ function initializeAddTodo() {
       if (!response.ok) {
         console.error('Error adding todo:', todo.error);
       } else {
-        console.log('Todo added successfully to database:', todo);
+        //console.log('Todo added successfully to database:', todo);
         const todoList = document.querySelector('.todo-list');
         const todoItem = document.createElement('li');
         todoItem.dataset.id = todo.id;
@@ -369,7 +369,7 @@ async function submitEditUserForm(e) {
 
     const result = await response.json();
     if (response.ok) {
-      console.log('User updated successfully:', result);
+      //console.log('User updated successfully:', result);
       const editUserModal = document.getElementById('editUserModal');
       editUserModal.style.display = 'none';
       userEmailSpan.textContent = result.user.email;

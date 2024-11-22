@@ -9,8 +9,8 @@ const {generateTask} = require("../../lib/ai-utils");
 
 const addToDo = function (user_id, enquiry) {
   return generateTask(enquiry).then(({error, task}) => {
-    console.log(`Error: ${error}`);
-    console.log("Generated Task:", JSON.stringify(task, null, 2));
+    //console.log(`Error: ${error}`);
+    //console.log("Generated Task:", JSON.stringify(task, null, 2));
     if (error) {
       return Promise.reject(new Error("Task generation failed"));
     }
@@ -42,11 +42,11 @@ const addToDo = function (user_id, enquiry) {
 
     return db.query(query, queryParams)
       .then((result) => {
-        console.log(result.rows[0]);
+        //console.log(result.rows[0]);
         return result.rows[0];
       })
       .catch((err) => {
-        console.log(err.message);
+        //ç.message);
         throw err;
       });
   });
@@ -64,11 +64,12 @@ const updateToDo = function (list) {
   return db
   .query(query, [list.title,list.id, list.category])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
@@ -84,11 +85,12 @@ const completeToDo = function (id) {
   return db
   .query(query, [id])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
@@ -104,11 +106,12 @@ const uncompleteTodo = function (id) {
   return db
   .query(query, [id])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
@@ -124,11 +127,12 @@ const deleteToDo = function (id) {
   return db
   .query(query, [id])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
@@ -138,7 +142,7 @@ const deleteToDo = function (id) {
  * @return {Promise<{}>} A promise to the user.
  */
 const toDosByCategory = function (user_id, category) {
-  console.log('user id and category in database', user_id, category)
+  //console.log('user id and category in database', user_id, category)
   const query = `
     select * from todos where user_id = $1 and lower(category) like $2
     order by complete_date desc, date_created desc
@@ -146,11 +150,12 @@ const toDosByCategory = function (user_id, category) {
   return db
   .query(query, [user_id, `%${category.toLowerCase()}%`])
   .then((result) => {
-    console.log('db return results', result.rows);
+    //console.log('db return results', result.rows);
     return result.rows;
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
@@ -168,7 +173,7 @@ const searchToDos = function (user_id, searchingKey) {
   return db
     .query(query, [user_id, `%${searchingKey.toLowerCase()}%`])
     .then((result) => {
-      console.log(result.rows);
+      //console.log(result.rows);
       return result.rows;
     })
     .catch((err) => {

@@ -8,7 +8,7 @@ const todosQueries = require('../db/queries/todos');
 router.post("/addToDo", (req, res) => {
   const user_id = req.session.userId;
   const enquire = req.body.enquire;
-  console.log('req body enquire and id:', enquire, user_id)
+  //console.log('req body enquire and id:', enquire, user_id)
   todosQueries
     .addToDo(user_id, enquire)
     .then((newTodo) => {

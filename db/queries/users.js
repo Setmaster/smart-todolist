@@ -9,11 +9,12 @@ const getUserWithEmail = function (email) {
   return db
     .query(`SELECT * FROM users where email = $1`, [email.toLowerCase()])
     .then((result) => {
-      console.log(result.rows[0]);
+      //console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch((err) => {
-      console.log(err.message);
+      //console.log(err.message);
+      throw err; // propagate error
     });
 };
 /**
@@ -25,11 +26,12 @@ const getUserWithId = function (id) {
   return db
     .query(`SELECT * FROM users where id = $1`, [id])
     .then((result) => {
-      console.log(result.rows[0]);
+      //console.log(result.rows[0]);
       return result.rows[0];
     })
     .catch((err) => {
-      console.log(err.message);
+      //console.log(err.message);
+      throw err; // propagate error
     });
 };
 /**
@@ -48,11 +50,12 @@ const addUser = function (user) {
   return db
   .query(query, [user.name,user.email,user.password])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 
 };
@@ -69,11 +72,12 @@ const updateUser = function (user) {
   return db
   .query(query, [user.name,user.id, user.password])
   .then((result) => {
-    console.log(result.rows[0]);
+    //console.log(result.rows[0]);
     return result.rows[0];
   })
   .catch((err) => {
-    console.log(err.message);
+    //console.log(err.message);
+    throw err; // propagate error
   });
 };
 
