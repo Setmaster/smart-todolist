@@ -251,7 +251,10 @@ function initializeAddTodo() {
           'Content-Type': 'application/json'
         },
       });
-      const {category} = await getCategoryResponse.json();
+      let {category} = await getCategoryResponse.json();
+      if (!category){
+        category = "Watch";
+      }
       const todo = await response.json();
       if (!response.ok) {
         console.error('Error adding todo:', todo.error);
