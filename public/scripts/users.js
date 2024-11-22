@@ -233,7 +233,8 @@ function initializeAddTodo() {
     addTodoBtn.disabled = true;
     addTodoBtn.classList.add('rotating');
     try {
-      const addTodoText = e.target.previousElementSibling.value;
+      const addTodoTextElement = e.target.previousElementSibling;
+      const addTodoText = addTodoTextElement.value.trim();
       const response = await fetch('/api/todos/addToDo', {
         method: 'POST',
         headers: {
@@ -271,6 +272,8 @@ function initializeAddTodo() {
         `;
           todoList.appendChild(todoItem);
         }
+
+        addTodoTextElement.value = '';
 
         // Reattach event listeners to the new list
         attachDynamicTodoEventListeners(todoList);
