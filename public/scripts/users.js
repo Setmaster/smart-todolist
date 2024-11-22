@@ -242,7 +242,13 @@ function initializeAddTodo() {
         },
         body: JSON.stringify({ enquire: addTodoText })
       });
-
+      const getCategoryResponse = await fetch('/api/todos/getLastCategory', {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+      });
+      const {category} = await getCategoryResponse.json();
       const todo = await response.json();
       if (!response.ok) {
         console.error('Error adding todo:', todo.error);
@@ -253,7 +259,8 @@ function initializeAddTodo() {
         todoItem.dataset.id = todo.id;
         todoItem.dataset.title = todo.title;
         todoItem.dataset.category = todo.category;
-        if (todoItem.dataset.category === categoryNameVar ){
+        console.log("Category check", todoItem.dataset.category, category)
+        if (todoItem.dataset.category === category ){
           // optimistically update todo
           const todoList = document.querySelector('.todo-list');
           const todoItem = document.createElement('li');

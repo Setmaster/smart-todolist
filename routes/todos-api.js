@@ -123,5 +123,13 @@ router.get("/searchToDos", (req, res) => {
     });
 });
 
+router.get("/getLastCategory", (req, res) => {
+  const lastCategory = req.session.lastCategory;
+  if (lastCategory) {
+    return res.status(200).json({ category: lastCategory });
+  } else {
+    return res.status(404).json({ error: "No last category found" });
+  }
+});
 
 module.exports = router;
