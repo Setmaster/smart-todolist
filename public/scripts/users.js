@@ -246,13 +246,19 @@ function initializeAddTodo() {
         console.error('Error adding todo:', todo.error);
       } else {
         console.log('Todo added successfully:', todo);
-        // optimistically update todo
         const todoList = document.querySelector('.todo-list');
         const todoItem = document.createElement('li');
         todoItem.dataset.id = todo.id;
         todoItem.dataset.title = todo.title;
         todoItem.dataset.category = todo.category;
-        todoItem.innerHTML = `
+        if (todoItem.dataset.category === categoryName ){
+          // optimistically update todo
+          const todoList = document.querySelector('.todo-list');
+          const todoItem = document.createElement('li');
+          todoItem.dataset.id = todo.id;
+          todoItem.dataset.title = todo.title;
+          todoItem.dataset.category = todo.category;
+          todoItem.innerHTML = `
           <div class="todo-list-name">
             <input type="checkbox" class="todo-checkbox">
             <p>${todo.details}</p>
@@ -262,7 +268,8 @@ function initializeAddTodo() {
             <i class="fa-solid fa-trash"></i>
           </div>
         `;
-        todoList.appendChild(todoItem);
+          todoList.appendChild(todoItem);
+        }
 
         // Reattach event listeners to the new list
         attachDynamicTodoEventListeners(todoList);
