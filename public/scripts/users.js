@@ -127,7 +127,7 @@ function updateTodoList(todos, category) {
       todoItem.innerHTML = `
         <div class="todo-list-name">
           <input type="checkbox" class="todo-checkbox" ${todo.complete_date ? 'checked' : ''}>
-          <p>${todo.details}</p>
+          <p>${todo.title}</p>
         </div>
         <div class="todo-list-edit">
           <i class="fas fa-edit"></i>
@@ -255,7 +255,7 @@ function initializeAddTodo() {
         todoItem.innerHTML = `
           <div class="todo-list-name">
             <input type="checkbox" class="todo-checkbox">
-            <p>${todo.details}</p>
+            <p>${todo.title}</p>
           </div>
           <div class="todo-list-edit">
             <i class="fas fa-edit"></i>
