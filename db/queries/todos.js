@@ -59,10 +59,10 @@ const addToDo = function (user_id, enquiry) {
  */
 const updateToDo = function (list) {
   const query = `
-    update todos set title = $1, category = $3, details = $4 where id = $2 RETURNING *
+    update todos set title = $1, category = $3 where id = $2 RETURNING *
   `;
   return db
-  .query(query, [list.title,list.id, list.category, list.details])
+  .query(query, [list.title,list.id, list.category])
   .then((result) => {
     console.log(result.rows[0]);
     return result.rows[0];

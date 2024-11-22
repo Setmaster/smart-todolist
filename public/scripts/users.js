@@ -62,12 +62,13 @@ async function saveTodoEdit(e) {
   const description = document.getElementById('todo').value;
 
   try {
+    console.log("My save todo:", JSON.stringify({ id, title: description, category }))
     const response = await fetch('/api/todos/updateToDo', {
       method: 'PUT',
       headers: {
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({ id, title, category, details: description })
+      body: JSON.stringify({ id, title: description, category })
     });
     const data = await response.json();
     if (data.error) {
@@ -75,7 +76,7 @@ async function saveTodoEdit(e) {
     } else {
       console.log('Todo updated successfully:', data);
       todoModal.style.display = 'none';
-      location.reload(); // Refresh the page to reflect changes
+       location.reload(); // Refresh the page to reflect changes
     }
   } catch (error) {
     console.error('Error:', error);
